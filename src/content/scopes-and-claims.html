@@ -1,0 +1,164 @@
+<section class="doc-section"><h2>Overview</h2><p>Modern applications are composed of client apps (web, mobile, SPA) that call backend APIs. To ensure only authorized clients and users can access specific resources, we rely on two complementary mechanisms built into the <strong>OAuth 2.0</strong> and <strong>OpenID Connect (OIDC)</strong> standards:</p><div class="grid-2"><div class="mini mini-a"><p>Scopes</p><p>Define <em>what</em> a client application is allowed to do. They represent permissions requested against a resource server (your API).</p></div><div class="mini mini-b"><p>Claims</p><p>Carry <em>who</em> the user or client is. Structured as key-value pairs inside a JWT token, they convey identity, roles, and contextual data to your API.</p></div></div><p>Together, scopes and claims allow an API to answer two fundamental security questions: <em>&quot;Is this client allowed to call this endpoint?&quot;</em> (scope) and <em>&quot;Does this user have the right to access this specific data?&quot;</em> (claims).</p></section><section class="doc-section"><h2>The Token Flow</h2><p>Before a client can call a protected API, it must obtain an <strong>access token</strong> from an authorization server (e.g., Azure AD, Auth0, Okta, Keycloak). The flow looks like this:</p><ol class="steps"><li>The client requests an access token, specifying desired <strong>scopes</strong>.</li><li>The user authenticates and consents (for delegated flows).</li><li>The authorization server issues a signed <strong>JWT access token</strong> containing granted scopes and identity <strong>claims</strong>.</li><li>The client sends the token as a <code>Bearer</code> token in the <code>Authorization</code> header.</li><li>The API validates the token signature, expiry, audience, scopes, and claims before serving the request.</li></ol><pre class="code"><code>GET /api/orders HTTP/1.1
+Host: api.example.com
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...</code></pre></section><section class="doc-section"><h2>Scopes</h2><p>Scopes are strings that represent a permission — either a broad category of access or a fine-grained operation on a resource. They are agreed upon between the client, the authorization server, and the API.</p><div class="doc-sub"><h3>Requesting Scopes</h3><p>Scopes are requested in the OAuth authorization request and in client credential flows:</p><pre class="code"><code>// Authorization Code Flow (user sign-in)
+GET https://login.example.com/authorize
+  ?response_type=code
+  &amp;client_id=my-spa-client
+  &amp;scope=openid profile email api://my-api/orders.read api://my-api/orders.write
+  &amp;redirect_uri=https://app.example.com/callback
+
+// Client Credentials Flow (service-to-service)
+POST https://login.example.com/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials
+&amp;client_id=my-service
+&amp;client_secret=...
+&amp;scope=api://my-api/.default</code></pre></div><div class="doc-sub"><h3>Scope Design Patterns</h3><p>Well-designed scopes follow a consistent naming convention and granularity:</p><div class="table-wrap"><table><thead><tr><th>Scope</th><th>Pattern</th><th>Description</th></tr></thead><tbody><tr><td>orders.read</td><td>resource.action</td><td>Read access to orders</td></tr><tr><td>orders.write</td><td>resource.action</td><td>Create and update orders</td></tr><tr><td>orders.delete</td><td>resource.action</td><td>Delete orders (elevated)</td></tr><tr><td>admin</td><td>role-like</td><td>Broad administrative access</td></tr><tr><td>api://my-api/.default</td><td>Azure AD app-level</td><td>All permissions the app has been granted</td></tr><tr><td>openid</td><td>OIDC standard</td><td>Issue an ID token (identity)</td></tr><tr><td>profile</td><td>OIDC standard</td><td>Include name/picture in ID token</td></tr><tr><td>email</td><td>OIDC standard</td><td>Include email address in ID token</td></tr></tbody></table></div></div><div class="callout callout-tip"><p class="callout-title">Principle of Least Privilege</p><div>Each client should request only the minimum scopes it actually needs. Broad scopes like<code>admin</code> should be reserved for privileged back-office services, not public client apps.</div></div></section><section class="doc-section"><h2>Claims</h2><p>Claims are assertions about the subject (user or client) embedded as key-value pairs inside a <strong>JSON Web Token (JWT)</strong>. They are cryptographically signed by the authorization server so that resource servers can trust them without calling back.</p><div class="doc-sub"><h3>Standard JWT Claims (RFC 7519)</h3><div class="table-wrap"><table><thead><tr><th>Claim</th><th>Full Name</th><th>Purpose</th></tr></thead><tbody><tr><td>sub</td><td>Subject</td><td>Unique identifier of the user or principal</td></tr><tr><td>iss</td><td>Issuer</td><td>URL of the authorization server that issued the token</td></tr><tr><td>aud</td><td>Audience</td><td>Intended recipient(s) — your API must verify this</td></tr><tr><td>exp</td><td>Expiration</td><td>Unix timestamp after which the token is invalid</td></tr><tr><td>iat</td><td>Issued At</td><td>Unix timestamp when the token was issued</td></tr><tr><td>nbf</td><td>Not Before</td><td>Token is not valid before this timestamp</td></tr><tr><td>jti</td><td>JWT ID</td><td>Unique identifier for replay detection</td></tr></tbody></table></div></div><div class="doc-sub"><h3>Common Identity Claims (OIDC / Azure AD)</h3><p>Identity providers add their own claims to access and ID tokens:</p><div class="badges"><span class="badge badge-indigo">name</span><span class="badge badge-indigo">email</span><span class="badge badge-indigo">given_name</span><span class="badge badge-indigo">family_name</span><span class="badge badge-indigo">tid</span><span class="badge badge-indigo">oid</span><span class="badge badge-indigo">preferred_username</span><span class="badge badge-indigo">roles</span><span class="badge badge-indigo">groups</span><span class="badge badge-indigo">scp</span><span class="badge badge-indigo">azp</span><span class="badge badge-indigo">appid</span><span class="badge badge-indigo">upn</span><span class="badge badge-indigo">unique_name</span></div><pre class="code"><code>// Decoded JWT access token payload (Azure AD example)
+{
+  &quot;iss&quot;: &quot;https://login.microsoftonline.com/{tenant-id}/v2.0&quot;,
+  &quot;sub&quot;: &quot;AadOid|00000000-0000-0000-0000-000000000001&quot;,
+  &quot;aud&quot;: &quot;api://my-api&quot;,
+  &quot;exp&quot;: 1712520000,
+  &quot;iat&quot;: 1712516400,
+  &quot;nbf&quot;: 1712516400,
+
+  // User identity
+  &quot;oid&quot;:   &quot;00000000-0000-0000-0000-000000000001&quot;,  // Immutable user object ID
+  &quot;tid&quot;:   &quot;11111111-1111-1111-1111-111111111111&quot;,  // Azure AD tenant ID
+  &quot;upn&quot;:   &quot;michael@example.com&quot;,
+  &quot;name&quot;:  &quot;Michael Wolfgang&quot;,
+  &quot;email&quot;: &quot;michael@example.com&quot;,
+
+  // Authorization
+  &quot;scp&quot;:   &quot;orders.read orders.write&quot;,              // Delegated scopes (space-separated)
+  &quot;roles&quot;: [&quot;Orders.Manager&quot;, &quot;Reports.Viewer&quot;],    // App role assignments
+
+  // Client info
+  &quot;azp&quot;:   &quot;client-app-id&quot;,                        // Authorized party (client that requested token)
+  &quot;appid&quot;: &quot;your-api-app-id&quot;
+}</code></pre></div><div class="doc-sub"><h3>The scp Claim vs the roles Claim</h3><p>Two claims are especially important for API authorization and are often confused:</p><div class="grid-2"><div class="mini mini-a"><p>scp (or scope)</p><p>Delegated permissions — <strong>what the user has consented to let the app do on their behalf</strong>. Only present in delegated (user + app) token flows.</p><span class="badge badge-indigo">Delegated Flow Only</span></div><div class="mini mini-b"><p>roles</p><p>Application roles — <strong>permissions assigned to the app or user in the directory</strong>. Present in both delegated and client credentials flows.</p><span class="badge badge-amber">Delegated &amp; App-Only</span></div></div></div></section><section class="doc-section"><h2>Validating Tokens in a Backend API</h2><p>Every API endpoint that requires authentication <strong>must</strong> independently validate the incoming token. Never trust a token that has been forwarded without re-validation. The validation steps are:</p><div class="doc-sub"><h3>Step 1 — Verify the Signature</h3><p>The JWT is signed with the authorization server&#x27;s private key. Fetch the public signing keys from the well-known JWKS endpoint and verify the signature.</p><pre class="code"><code>// Node.js / Express example using &#x27;jose&#x27; library
+import { createRemoteJWKSet, jwtVerify } from &#x27;jose&#x27;;
+
+const JWKS = createRemoteJWKSet(
+  new URL(&#x27;https://login.microsoftonline.com/{tenant-id}/discovery/v2.0/keys&#x27;)
+);
+
+async function verifyToken(authHeader) {
+  const token = authHeader?.replace(&#x27;Bearer &#x27;, &#x27;&#x27;);
+  if (!token) throw new Error(&#x27;Missing token&#x27;);
+
+  const { payload } = await jwtVerify(token, JWKS, {
+    issuer:   &#x27;https://login.microsoftonline.com/{tenant-id}/v2.0&#x27;,
+    audience: &#x27;api://my-api&#x27;,
+  });
+  return payload;  // Returns decoded, verified claims object
+}</code></pre></div><div class="doc-sub"><h3>Step 2 — Validate Standard Claims</h3><p>After signature verification, check the token&#x27;s metadata claims:</p><pre class="code"><code>function validateStandardClaims(claims) {
+  const now = Math.floor(Date.now() / 1000);
+
+  if (claims.exp &lt; now)
+    throw new Error(&#x27;Token has expired&#x27;);
+
+  if (claims.nbf &amp;&amp; claims.nbf &gt; now)
+    throw new Error(&#x27;Token not yet valid&#x27;);
+
+  if (claims.aud !== &#x27;api://my-api&#x27;)
+    throw new Error(&#x27;Invalid audience — token not intended for this API&#x27;);
+
+  if (claims.iss !== &#x27;https://login.microsoftonline.com/{tenant-id}/v2.0&#x27;)
+    throw new Error(&#x27;Invalid issuer&#x27;);
+}</code></pre><div class="callout callout-warning"><p class="callout-title">Always verify the audience (aud)</p><div>A token issued for a different API is valid within that system but must be rejected by yours. Skipping audience validation is a common vulnerability — it allows token substitution attacks.</div></div></div><div class="doc-sub"><h3>Step 3 — Enforce Scopes</h3><p>Check that the token contains the required scope before processing the request:</p><pre class="code"><code>// Middleware: require a specific scope
+function requireScope(requiredScope) {
+  return (req, res, next) =&gt; {
+    const claims = req.claims;  // Attached by token verification middleware
+    const scopes = (claims.scp || claims.scope || &#x27;&#x27;).split(&#x27; &#x27;);
+
+    if (!scopes.includes(requiredScope)) {
+      return res.status(403).json({
+        error: &#x27;insufficient_scope&#x27;,
+        message: `Required scope: ${requiredScope}`,
+      });
+    }
+    next();
+  };
+}
+
+// Usage on routes
+app.get(&#x27;/api/orders&#x27;,         requireScope(&#x27;orders.read&#x27;),   getOrders);
+app.post(&#x27;/api/orders&#x27;,        requireScope(&#x27;orders.write&#x27;),  createOrder);
+app.delete(&#x27;/api/orders/:id&#x27;,  requireScope(&#x27;orders.delete&#x27;), deleteOrder);</code></pre></div><div class="doc-sub"><h3>Step 4 — Enforce Claims-Based Authorization</h3><p>Scopes confirm <em>what the client can do</em>; claims confirm <em>what data the user can touch</em>. Use claims for fine-grained row-level and resource-level access control:</p><pre class="code"><code>// Only return orders belonging to the authenticated user
+app.get(&#x27;/api/orders&#x27;, requireScope(&#x27;orders.read&#x27;), async (req, res) =&gt; {
+  const { sub, oid, roles } = req.claims;
+
+  // Admins see all orders; regular users see only their own
+  const filter = roles?.includes(&#x27;Orders.Manager&#x27;)
+    ? {}                        // No filter — full access
+    : { ownerId: oid };         // Scoped to their user object ID
+
+  const orders = await db.orders.findMany({ where: filter });
+  res.json(orders);
+});
+
+// Verify the caller owns the resource before returning it
+app.get(&#x27;/api/orders/:id&#x27;, requireScope(&#x27;orders.read&#x27;), async (req, res) =&gt; {
+  const order = await db.orders.findById(req.params.id);
+
+  if (!order) return res.status(404).json({ error: &#x27;Not found&#x27; });
+
+  // Claim-based ownership check
+  const isOwner = order.ownerId === req.claims.oid;
+  const isAdmin = req.claims.roles?.includes(&#x27;Orders.Manager&#x27;);
+
+  if (!isOwner &amp;&amp; !isAdmin)
+    return res.status(403).json({ error: &#x27;Access denied&#x27; });
+
+  res.json(order);
+});</code></pre></div><div class="doc-sub"><h3>ASP.NET Core Example</h3><p>The same pattern in C# using the Microsoft.Identity.Web library:</p><pre class="code"><code>// Program.cs — configure JWT bearer authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+  .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(&quot;AzureAd&quot;));
+
+builder.Services.AddAuthorization(options =&gt; {
+  options.AddPolicy(&quot;OrdersRead&quot;,  p =&gt; p.RequireClaim(&quot;scp&quot;, &quot;orders.read&quot;));
+  options.AddPolicy(&quot;OrdersWrite&quot;, p =&gt; p.RequireClaim(&quot;scp&quot;, &quot;orders.write&quot;));
+  options.AddPolicy(&quot;AdminOnly&quot;,   p =&gt; p.RequireRole(&quot;Orders.Manager&quot;));
+});
+
+// OrdersController.cs
+[ApiController]
+[Route(&quot;api/[controller]&quot;)]
+[Authorize]
+public class OrdersController : ControllerBase
+{
+  [HttpGet]
+  [Authorize(Policy = &quot;OrdersRead&quot;)]
+  public async Task&lt;IActionResult&gt; GetOrders()
+  {
+      var userId = User.FindFirstValue(&quot;oid&quot;);  // Read the oid claim
+      var isAdmin = User.IsInRole(&quot;Orders.Manager&quot;);
+
+      var orders = isAdmin
+          ? await _repo.GetAllOrders()
+          : await _repo.GetOrdersByOwner(userId);
+
+      return Ok(orders);
+  }
+}</code></pre></div></section><section class="doc-section"><h2>Service-to-Service (App-Only) Tokens</h2><p>When a backend service calls another API without a user in the loop (daemon services, background workers, microservices), use the <strong>Client Credentials</strong> flow. These tokens carry <code>roles</code> instead of <code>scp</code>.</p><pre class="code"><code>// Detecting app-only vs delegated token
+function isAppOnlyToken(claims) {
+  // Delegated tokens have a non-zero &#x27;scp&#x27; and a real &#x27;sub&#x27;
+  // App-only tokens have no &#x27;scp&#x27; and &#x27;sub&#x27; equals the application&#x27;s object ID
+  return !claims.scp &amp;&amp; claims.idtyp === &#x27;app&#x27;;
+}
+
+app.get(&#x27;/api/internal/reports&#x27;, async (req, res) =&gt; {
+  const claims = req.claims;
+
+  if (isAppOnlyToken(claims)) {
+    // App-only: check app roles
+    if (!claims.roles?.includes(&#x27;Reports.Viewer&#x27;))
+      return res.status(403).json({ error: &#x27;App role required&#x27; });
+  } else {
+    // Delegated: check scope AND user identity
+    requireScope(&#x27;orders.read&#x27;)(req, res, () =&gt; {});
+  }
+  // handle request ...
+});</code></pre></section><section class="doc-section"><h2>Best Practices</h2><div class="grid-2"><div class="callout callout-danger"><p class="callout-title">🔒  Always validate on the API</p><div>Never rely on the client to enforce scopes. Every API endpoint must validate the token independently.</div></div><div class="callout callout-danger"><p class="callout-title">🎯  Validate the audience</p><div>Always check the aud claim matches your API identifier to prevent token substitution attacks.</div></div><div class="callout callout-warning"><p class="callout-title">⚡  Keep tokens short-lived</p><div>Access tokens should expire in 15–60 minutes. Use refresh tokens to obtain new ones without re-authentication.</div></div><div class="callout callout-tip"><p class="callout-title">🔑  Least privilege scopes</p><div>Request only the minimum scopes needed. Avoid issuing /.default or admin-level scopes to user-facing apps.</div></div><div class="callout callout-info"><p class="callout-title">📋  Prefer immutable claims</p><div>Use oid (object ID) rather than email or name as user identifiers — those can change.</div></div><div class="callout callout-danger"><p class="callout-title">🚫  Never trust without verification</p><div>Never decode a JWT and use its claims without first verifying the signature. Treat unverified tokens as untrusted input.</div></div><div class="callout callout-info"><p class="callout-title">📝  Log for auditability</p><div>Log the sub (or oid), azp, and granted scopes on each API call. Avoid logging the raw token.</div></div><div class="callout callout-tip"><p class="callout-title">🔄  Rotate signing keys</p><div>Use the JWKS endpoint to dynamically discover signing keys. Cache with a short TTL and refresh on key ID (kid) miss.</div></div></div></section><section class="doc-section"><h2>Common Pitfalls</h2><ul class="plain-list"><li class="pit"><span class="x">✗</span><div><span>Skipping audience validation</span><span>→</span><span>Always verify aud matches your API client ID / app URI.</span></div></li><li class="pit"><span class="x">✗</span><div><span>Checking scopes client-side only</span><span>→</span><span>The API must re-validate every token — the client can be compromised.</span></div></li><li class="pit"><span class="x">✗</span><div><span>Using the ID token to call APIs</span><span>→</span><span>ID tokens are for identity; use the access token for API authorization.</span></div></li><li class="pit"><span class="x">✗</span><div><span>Storing tokens in localStorage</span><span>→</span><span>Use HttpOnly cookies or in-memory storage; localStorage is readable by any script.</span></div></li><li class="pit"><span class="x">✗</span><div><span>Long-lived access tokens</span><span>→</span><span>Short expiry + refresh tokens is safer than long-lived tokens.</span></div></li><li class="pit"><span class="x">✗</span><div><span>Ignoring the nbf claim</span><span>→</span><span>Validate not-before to prevent replay of pre-issued tokens.</span></div></li><li class="pit"><span class="x">✗</span><div><span>Hardcoding public keys</span><span>→</span><span>Always fetch keys dynamically from the JWKS endpoint to support key rotation.</span></div></li><li class="pit"><span class="x">✗</span><div><span>Roles defined only in the token, not the directory</span><span>→</span><span>App roles assigned in the authorization server / directory are authoritative; do not let users self-assign roles via token manipulation.</span></div></li></ul></section><section class="doc-section"><h2>Further Reading</h2><ul class="plain-list"><li class="ref"><span>›</span><a href="https://datatracker.ietf.org/doc/html/rfc6749" target="_blank" rel="noopener noreferrer">OAuth 2.0 Framework</a><span>(RFC 6749)</span></li><li class="ref"><span>›</span><a href="https://datatracker.ietf.org/doc/html/rfc7519" target="_blank" rel="noopener noreferrer">JSON Web Token (JWT)</a><span>(RFC 7519)</span></li><li class="ref"><span>›</span><a href="https://openid.net/specs/openid-connect-core-1_0.html" target="_blank" rel="noopener noreferrer">OpenID Connect Core</a><span>(openid.net)</span></li><li class="ref"><span>›</span><a href="https://learn.microsoft.com/en-us/entra/identity-platform/" target="_blank" rel="noopener noreferrer">Microsoft Identity Platform</a><span>(Microsoft Learn)</span></li><li class="ref"><span>›</span><a href="https://owasp.org/www-project-api-security/" target="_blank" rel="noopener noreferrer">OWASP API Security Top 10</a><span>(owasp.org)</span></li><li class="ref"><span>›</span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics" target="_blank" rel="noopener noreferrer">OAuth 2.0 Security Best Current Practice</a><span>(RFC Draft)</span></li></ul></section>

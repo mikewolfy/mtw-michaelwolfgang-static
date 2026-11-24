@@ -1,0 +1,333 @@
+{
+ "books": [
+  {
+   "title": "The Man Who Died Twice",
+   "author": "Richard Osman",
+   "date": "October 2026",
+   "category": "Fiction",
+   "status": "In Progress",
+   "imageUrl": "https://covers.openlibrary.org/b/id/12002504-L.jpg",
+   "notes": "Book two of the Thursday Murder Club series, as the retirees are pulled into a new case when a dangerous figure from Elizabeth’s past turns up."
+  },
+  {
+   "title": "The Dungeon Anarchist's Cookbook",
+   "author": "Matt Dinniman",
+   "date": "October 2026",
+   "category": "Fiction",
+   "status": "In Progress",
+   "imageUrl": "https://covers.openlibrary.org/b/id/15233609-L.jpg",
+   "notes": "Book three of the Dungeon Crawler Carl series, continuing Carl and Princess Donut's fight to survive the dungeon."
+  },
+  {
+   "title": "Carl's Doomsday Scenario",
+   "author": "Matt Dinniman",
+   "date": "September 2026",
+   "category": "Fiction",
+   "rating": 9,
+   "imageUrl": "https://covers.openlibrary.org/b/id/11702962-L.jpg",
+   "notes": "Book two of the Dungeon Crawler Carl series, following Carl and Princess Donut deeper into the game-show dungeon built beneath a demolished Earth."
+  },
+  {
+   "title": "Dungeon Crawler Carl",
+   "author": "Matt Dinniman",
+   "date": "August 2026",
+   "category": "Fiction",
+   "imageUrl": "https://covers.openlibrary.org/b/id/15143022-L.jpg",
+   "notes": "A darkly funny litRPG survival story where Carl and his cat Princess Donut fight for their lives through a dungeon built beneath the ruins of Earth."
+  },
+  {
+   "title": "The Thursday Murder Club",
+   "author": "Richard Osman",
+   "date": "June 2026",
+   "category": "Fiction",
+   "imageUrl": "https://covers.openlibrary.org/b/id/10201431-L.jpg",
+   "notes": "A cozy mystery about four retirees in a British retirement village who reopen a cold case and outwit the professionals investigating a new murder."
+  },
+  {
+   "title": "Hidden Potential",
+   "author": "Adam Grant",
+   "date": "June 2024",
+   "category": "Leadership",
+   "imageUrl": "images/books/hidden-potential.jpg",
+   "notes": "A book about being our best and producing at a high level. Key ideas include getting comfortable with discomfort, failing often, avoiding perfectionism, and learning through teaching."
+  },
+  {
+   "title": "Outlive, the Science and Art of Longevity",
+   "author": "Peter Attia",
+   "date": "May 2024",
+   "category": "Health",
+   "imageUrl": "images/books/outlive.jpg",
+   "notes": "A book about expanding lifespan and healthspan, including focus on exercise, sleep, nutrition, strength, and VO2 max."
+  },
+  {
+   "title": "Chatter: The Voice in Our Head, Why It Matters and How to Harness It",
+   "author": "Ethan Kross",
+   "date": "January 2024",
+   "category": "Psychology",
+   "imageUrl": "images/books/chatter.jpg",
+   "notes": "A book about inner dialogue, rumination, and practical techniques to create distance and regain perspective."
+  },
+  {
+   "title": "7 Habits of Highly Effective People",
+   "author": "Stephen Covey",
+   "date": "June 2023",
+   "category": "Leadership",
+   "imageUrl": "images/books/seven-habits.jpg",
+   "notes": "A classic on moving from individual effectiveness to team effectiveness through seven foundational habits."
+  },
+  {
+   "title": "Essentialism, The Disciplined Pursuit of Less",
+   "author": "Greg McKeown",
+   "date": "May 2023",
+   "category": "Self-Improvement",
+   "imageUrl": "images/books/essentialism.jpg",
+   "notes": "A book about deliberately focusing on what matters most and removing what doesn't."
+  },
+  {
+   "title": "Jack Reacher - Personal (#19)",
+   "author": "Lee Child",
+   "date": "2023",
+   "category": "Fiction",
+   "imageUrl": "images/books/reacher-personal.jpg",
+   "notes": "Another Jack Reacher story focused on tracking down a rogue sniper in Paris."
+  },
+  {
+   "title": "Jack Reacher - The Persuader (#7)",
+   "author": "Lee Child",
+   "date": "2022",
+   "category": "Fiction",
+   "imageUrl": "images/books/reacher-persuader.jpg",
+   "notes": "A Jack Reacher story with undercover work against a drug dealer and an old nemesis."
+  },
+  {
+   "title": "The Great Influenze",
+   "author": "John M Barry",
+   "date": "January 2021",
+   "category": "History",
+   "imageUrl": "images/books/great.influenze.jpg",
+   "notes": "A book about the 1918 influenza outbreak and the state of medicine at that time."
+  },
+  {
+   "title": "Antifragile",
+   "author": "Nassim Nicholas Taleb",
+   "date": "November 2020",
+   "format": "Audiobook",
+   "category": "Business",
+   "imageUrl": "images/books/anti-fragile.jpg",
+   "notes": "A book about how people and systems can benefit and grow from volatility and uncertainty."
+  },
+  {
+   "title": "Jack Reacher - The Midnight Line",
+   "author": "Lee Child",
+   "date": "October 2020",
+   "format": "Audiobook",
+   "category": "Fiction",
+   "imageUrl": "images/books/midnight.line.jpg",
+   "notes": "A Reacher story involving the search for an army veteran caught in an opioid ring."
+  },
+  {
+   "title": "Drive",
+   "author": "Daniel H. Pink",
+   "date": "September 2020",
+   "format": "Audiobook",
+   "category": "Leadership",
+   "status": "Didn't finish",
+   "imageUrl": "images/books/drive.png",
+   "notes": "A book about motivation. Key theme: intrinsic motivation tends to outperform carrot-and-stick for creative work.",
+   "summaryUrl": "https://www.samuelthomasdavies.com/book-summaries/business/drive/"
+  },
+  {
+   "title": "Dare to Lead",
+   "author": "Brene Brown",
+   "date": "September 2020",
+   "format": "Audiobook",
+   "category": "Leadership",
+   "imageUrl": "images/books/dare.to.lead.jpg",
+   "notes": "A leadership book centered on courage, vulnerability, and values-based leadership.",
+   "summaryUrl": "https://paulminors.com/blog/dare-to-lead-by-brene-brown-book-summary-pdf/"
+  },
+  {
+   "title": "Skin in the Game",
+   "author": "Nassim Nicholas Taleb",
+   "date": "2020",
+   "format": "Audiobook",
+   "category": "Business",
+   "imageUrl": "images/books/skin-in-the-game.png",
+   "notes": "A book about responsibility and the importance of having real stake in the outcomes you advocate."
+  },
+  {
+   "title": "Start with Why",
+   "author": "Simon Sinek",
+   "date": "August 2020",
+   "format": "Ebook",
+   "category": "Leadership",
+   "status": "In Progress",
+   "imageUrl": "images/books/start.with.why.png",
+   "notes": "How successful companies and leaders inspire by clarifying and communicating purpose.",
+   "summaryUrl": "https://fourminutebooks.com/start-with-why-summary/"
+  },
+  {
+   "title": "Rework",
+   "author": "Jason Fried",
+   "date": "August 2020",
+   "format": "Audiobook",
+   "category": "Business",
+   "imageUrl": "images/books/rework.jpg",
+   "notes": "A practical take on building companies by staying focused, keeping things simple, and avoiding unnecessary complexity.",
+   "summaryUrl": "https://sipreads.com/rework"
+  },
+  {
+   "title": "Leonardo da Vinci",
+   "author": "Walter Isaacson",
+   "date": "July 2020",
+   "format": "Audiobook",
+   "category": "Biography",
+   "status": "In Progress",
+   "imageUrl": "images/books/leonardo.da.vinci.jpg",
+   "notes": "A biography of Leonardo da Vinci with emphasis on curiosity across many disciplines.",
+   "summaryUrl": "https://fourminutebooks.com/leonardo-da-vinci-summary/"
+  },
+  {
+   "title": "Measure What Matters",
+   "author": "John Doerr",
+   "date": "July 2020",
+   "format": "Audiobook",
+   "category": "Leadership",
+   "imageUrl": "images/books/measure.what.matters.png",
+   "notes": "A book on OKRs, including focus, alignment, accountability, tracking, and stretch goals.",
+   "summaryUrl": "https://wisewords.blog/book-summaries/measure-what-matters/"
+  },
+  {
+   "title": "Extreme Ownership",
+   "author": "Jocko Willink and Leif Babin",
+   "date": "June 2020",
+   "format": "Audiobook",
+   "category": "Leadership",
+   "imageUrl": "images/books/extreme.ownership.jpg",
+   "notes": "A leadership book based on owning outcomes, simplifying plans, decentralized command, and prioritizing execution.",
+   "summaryUrl": "https://readingraphics.com/book-summary-extreme-ownership/"
+  },
+  {
+   "title": "Call Sign Chaos - Learning to Lead",
+   "author": "Jim Mattis",
+   "date": "June 2020",
+   "format": "Audiobook",
+   "category": "Leadership",
+   "imageUrl": "images/books/call.sign.chaos.jpg",
+   "notes": "Leadership lessons from military service across direct, executive, and strategic leadership levels.",
+   "summaryUrl": "https://www.threestarleadership.com/books/book-review-call-sign-chaos"
+  },
+  {
+   "title": "The Power of Habit",
+   "author": "Charles Duhigg",
+   "date": "May 2020",
+   "format": "Audiobook",
+   "category": "Self-Improvement",
+   "imageUrl": "images/books/duhigg.power.of.habits.jpg",
+   "notes": "A practical exploration of habit loops and how to intentionally change habits."
+  },
+  {
+   "title": "Decisive",
+   "author": "Chip and Dan Heath",
+   "date": "February 2020",
+   "format": "Audiobook",
+   "category": "Leadership",
+   "imageUrl": "images/books/decisive.jpg",
+   "notes": "A framework for better decisions, centered on the WRAP model.",
+   "summaryUrl": "https://www.samuelthomasdavies.com/book-summaries/business/decisive/"
+  },
+  {
+   "title": "Atomic Habits",
+   "author": "James Clear",
+   "date": "February 2020",
+   "format": "Audiobook",
+   "category": "Self-Improvement",
+   "imageUrl": "images/books/atomic.habits.jpg",
+   "notes": "A book about compounding small habits into meaningful long-term outcomes.",
+   "summaryUrl": "https://www.samuelthomasdavies.com/book-summaries/self-help/atomic-habits/"
+  },
+  {
+   "title": "Accelerate",
+   "author": "Nicole Forsgren, Jez Humble, and Gene Kim",
+   "date": "February 2020",
+   "format": "Audiobook",
+   "category": "Software",
+   "imageUrl": "images/books/accelerate.jpg",
+   "notes": "Evidence-based insights on software delivery performance and organizational outcomes.",
+   "summaryUrl": "https://medium.com/@tdevroome/book-summary-accelerate-c531efe4c34c"
+  },
+  {
+   "title": "Power of Moments",
+   "author": "Chip and Dan Heath",
+   "date": "February 2020",
+   "format": "Audiobook",
+   "category": "Psychology",
+   "imageUrl": "images/books/power.of.moments.png",
+   "notes": "A book about how memorable moments are created, including the EPIC model: Elevation, Pride, Insight, and Connection.",
+   "summaryUrl": "https://www.samuelthomasdavies.com/book-summaries/business/the-power-of-moments/"
+  },
+  {
+   "title": "Range: Why Generalists Triumph in a Specialized World",
+   "author": "David Epstein",
+   "date": "January 2020",
+   "format": "Audiobook",
+   "category": "Self-Improvement",
+   "imageUrl": "images/books/range.jpg",
+   "notes": "A case for broad learning and cross-domain thinking over narrow specialization.",
+   "summaryUrl": "https://www.summary.com/magazine/range-why-generalists-triumph-in-a-specialized-world-by-david-epstein/"
+  },
+  {
+   "title": "The Infinite Game",
+   "author": "Simon Sinek",
+   "date": "January 2020",
+   "format": "Audiobook",
+   "category": "Leadership",
+   "imageUrl": "images/books/infinite.game.jpg",
+   "notes": "A long-term mindset for leadership focused on trust, loyalty, and mission over short-term wins.",
+   "summaryUrl": "http://www.15minutebusinessbooks.com/blog/2019/11/06/the-infinite-game-by-simon-sinek-here-are-my-five-lessons-and-takeaways/"
+  },
+  {
+   "title": "Never Split the Difference",
+   "author": "Chris Voss",
+   "date": "November 2019",
+   "format": "Audiobook",
+   "category": "Leadership",
+   "imageUrl": "images/books/never.split.the.difference.jpg",
+   "notes": "Negotiation principles from a former FBI hostage negotiator with practical examples for work and life.",
+   "summaryUrl": "https://www.samuelthomasdavies.com/book-summaries/business/never-split-the-difference/"
+  },
+  {
+   "title": "Why We Sleep",
+   "author": "Matthew Walker",
+   "date": "September 2019",
+   "format": "Audiobook",
+   "category": "Health",
+   "imageUrl": "images/books/why.we.sleep.jpg",
+   "notes": "A deep dive into sleep science and the physical and cognitive cost of sleep deprivation.",
+   "summaryUrl": "https://www.grahammann.net/book-notes/why-we-sleep-matthew-walker#:~:text=It%20is%20a%20summary%20of,as%20sleep%20affects%20us%20all."
+  },
+  {
+   "title": "Thinking Fast and Slow",
+   "author": "Daniel Kahneman",
+   "date": "August 2019",
+   "format": "Audiobook",
+   "category": "Psychology",
+   "imageUrl": "images/books/fast.and.slow.jpg",
+   "notes": "A classic on cognitive biases and how human decision making often departs from strict rationality."
+  }
+ ],
+ "recommendationLists": [
+  {
+   "label": "Collins Book List",
+   "url": "https://www.amazon.com/dp/B07VVHPSZC?searchxofy=true&ref_=dbs_s_aps_series_rwt"
+  },
+  {
+   "label": "Sam Davies Book Lists and Summaries",
+   "url": "https://www.samuelthomasdavies.com/book-summaries/"
+  },
+  {
+   "label": "A list with several favorites",
+   "url": "https://rickkettner.com/the-best-self-help-books/"
+  }
+ ]
+}

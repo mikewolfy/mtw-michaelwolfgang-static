@@ -82,7 +82,6 @@ export function buildPages() {
       <ul class="links">
         <li><a href="${u('reed')}">Reed →</a></li>
         <li><a href="${u('emma')}">Emma →</a></li>
-        <li><a href="${u('mom-dad')}">Tim &amp; Mary Ann — still in love →</a></li>
       </ul>`,
   })}
   ${feature({
@@ -746,14 +745,6 @@ mwIDAQAB
     title: 'Emma Wolfgang',
     description: 'Emma Wolfgang’s page.',
     body: pageHead({ eyebrow: 'Family', title: 'Emma Wolfgang' }) + section(`<div class="card center" style="max-width:640px;margin:0 auto"><p>Welcome to Emma’s page!</p></div>`),
-  });
-  add({
-    path: 'mom-dad',
-    title: 'Tim and Mary Ann — Still in Love',
-    description: 'Celebrating Tim and Mary Ann Wolfgang.',
-    body:
-      pageHead({ eyebrow: 'Family', title: 'Tim and Mary Ann — still in love' }) +
-      section(`<div class="card center" style="max-width:640px;margin:0 auto"><p>Celebrating Tim and Mary Ann Wolfgang!</p></div>`),
   });
 
   return pages;

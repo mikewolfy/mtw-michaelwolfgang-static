@@ -333,6 +333,11 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
   .feature-art { max-width: 260px; }
 }
 
+.feature-art.photo-art { aspect-ratio: 4 / 3; }
+.about-intro { display: grid; grid-template-columns: 180px 1fr; gap: 1.6rem; align-items: start; }
+.about-intro img { width: 180px; height: 180px; object-fit: cover; border-radius: 50%; box-shadow: var(--shadow-md); }
+@media (max-width: 620px) { .about-intro { grid-template-columns: 1fr; } .about-intro img { width: 140px; height: 140px; } }
+
 /* ---------- Forms ---------- */
 label, .label { display: block; font-weight: 650; font-size: 0.92rem; margin-bottom: 0.4rem; }
 input[type="text"], input[type="number"], input[type="date"], input[type="search"], select, textarea {

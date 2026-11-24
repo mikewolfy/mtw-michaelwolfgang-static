@@ -14,7 +14,7 @@ It is built to be served from **GitHub Pages**.
 | Technical docs | Scopes & Claims, CIAM Resources |
 | Tools & games | Myers-Briggs Test, 5 Love Languages Test, Life Timers, Pace Calculator, Spell Press |
 | Reading | Book List (34 books), Quotes (173, searchable) |
-| Family | Reed, Emma, Tim & Mary Ann |
+| Family | Reed, Emma |
 
 URLs match the React app (`/developer/podcasts/`, `/booklist/`, `/games/spellpress/`, …), and the old
 `/developer/interview-questions?category=Azure` links still work.

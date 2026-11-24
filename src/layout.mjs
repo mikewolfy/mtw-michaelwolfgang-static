@@ -2,9 +2,9 @@
 
 export const SITE = {
   name: 'Michael Wolfgang',
-  tagline: 'Software Architect • Husband & Dad • Runner • Investor • Lifelong Learner',
+  tagline: 'Husband & Dad • Runner • Black Belt • Reader • Investor • Software Architect',
   description:
-    'Michael Wolfgang — software engineer and architect building cloud applications and APIs. Developer resources, tools, books, quotes and more.',
+    'The personal site of Michael Wolfgang — family, running, Tae Kwon Do, books, quotes, fun tools, and a corner for software.',
 };
 
 export const esc = (s) =>
@@ -15,33 +15,41 @@ export const NAV = [
   { label: 'Home', path: '' },
   { label: 'About', path: 'about' },
   {
-    group: 'Developer',
+    group: 'Reading',
     items: [
-      { label: 'Overview', path: 'developer', desc: 'Everything for developers' },
-      { label: 'Interview Questions', path: 'developer/interview-questions', desc: 'C#, Azure & problem solving' },
+      { label: 'Book List', path: 'booklist', desc: 'Books with notes & ratings' },
+      { label: 'Quotes', path: 'quotes', desc: 'Searchable quote collection' },
       { label: 'Podcasts', path: 'developer/podcasts', desc: 'What I listen to' },
+    ],
+  },
+  {
+    group: 'Fun & Tools',
+    items: [
+      { label: 'Pace Calculator', path: 'pace-calculator', desc: 'Target race paces' },
+      { label: 'Life Timers', path: 'life-timers', desc: 'Time until year-end, retirement…' },
+      { label: 'Myers-Briggs Test', path: 'myers-briggs', desc: '32-question personality test' },
+      { label: 'Love Languages', path: 'love-languages', desc: 'How you give & receive love' },
+      { label: 'Spell Press', path: 'games/spellpress', desc: 'A quick spelling game' },
+    ],
+  },
+  {
+    group: 'Family',
+    items: [
+      { label: 'Reed', path: 'reed' },
+      { label: 'Emma', path: 'emma' },
+      { label: 'Tim & Mary Ann', path: 'mom-dad', desc: 'Still in love' },
+    ],
+  },
+  {
+    group: 'Work & Tech',
+    items: [
+      { label: 'Overview', path: 'developer', desc: 'My software corner' },
+      { label: 'Interview Questions', path: 'developer/interview-questions', desc: 'C#, Azure & problem solving' },
       { label: 'Resources', path: 'developer/resources', desc: 'Azure, .NET & engineering' },
       { label: 'JWT Decoder', path: 'developer/jwt-decoder', desc: 'Inspect JSON Web Tokens' },
       { label: 'RSA Validator', path: 'developer/rsa-validator', desc: 'Verify RSA signatures' },
       { label: 'Scopes & Claims', path: 'tech-docs/scopes-and-claims', desc: 'Securing APIs guide' },
       { label: 'CIAM Resources', path: 'tech-docs/ciam-resources', desc: 'Customer identity reading' },
-    ],
-  },
-  {
-    group: 'Tools & Games',
-    items: [
-      { label: 'Myers-Briggs Test', path: 'myers-briggs', desc: '32-question personality test' },
-      { label: 'Love Languages', path: 'love-languages', desc: 'Discover how you give & receive love' },
-      { label: 'Life Timers', path: 'life-timers', desc: 'Time until year-end, retirement…' },
-      { label: 'Pace Calculator', path: 'pace-calculator', desc: 'Target race paces' },
-      { label: 'Spell Press', path: 'games/spellpress', desc: 'A quick spelling game' },
-    ],
-  },
-  {
-    group: 'Reading',
-    items: [
-      { label: 'Book List', path: 'booklist', desc: 'Books with notes & ratings' },
-      { label: 'Quotes', path: 'quotes', desc: 'Searchable quote collection' },
     ],
   },
   { label: 'Contact', path: 'contact' },
@@ -98,12 +106,12 @@ function footer(root) {
         <ul>${a('', 'Home')}${a('about', 'About')}${a('contact', 'Contact')}${a('links', 'Useful Links')}</ul>
       </div>
       <div>
-        <h4>Developer</h4>
-        <ul>${a('developer', 'Overview')}${a('developer/interview-questions', 'Interview Questions')}${a('developer/podcasts', 'Podcasts')}${a('tech-docs/scopes-and-claims', 'Scopes & Claims')}</ul>
+        <h4>Reading &amp; fun</h4>
+        <ul>${a('booklist', 'Book List')}${a('quotes', 'Quotes')}${a('pace-calculator', 'Pace Calculator')}${a('games/spellpress', 'Spell Press')}</ul>
       </div>
       <div>
-        <h4>More</h4>
-        <ul>${a('booklist', 'Book List')}${a('quotes', 'Quotes')}${a('life-timers', 'Life Timers')}${a('games/spellpress', 'Spell Press')}</ul>
+        <h4>Work &amp; tech</h4>
+        <ul>${a('developer', 'Overview')}${a('developer/interview-questions', 'Interview Questions')}${a('tech-docs/scopes-and-claims', 'Scopes & Claims')}${a('developer/jwt-decoder', 'JWT Decoder')}</ul>
       </div>
     </div>
     <div class="footer-bottom">
@@ -133,7 +141,7 @@ export function pageHead({ title, lede, eyebrow, crumbs = [] }) {
 /** Full HTML document. */
 export function renderDocument({ path, title, description, body, scripts = [], inlineHead = '' }) {
   const root = rootFor(path);
-  const fullTitle = path === '' ? `${SITE.name} — Software Engineer & Architect` : `${title} — ${SITE.name}`;
+  const fullTitle = path === '' ? `${SITE.name} — Family, Running, Reading & More` : `${title} — ${SITE.name}`;
   const desc = esc(description || SITE.description);
   return `<!doctype html>
 <html lang="en">

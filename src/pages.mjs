@@ -77,12 +77,7 @@ export function buildPages() {
     img: 'family-heart.svg',
     alt: 'Heart illustration',
     title: 'Family first',
-    body: `<p>My best days are spent with my beautiful wife and wonderful kids — running outdoors, training together, and enjoying a good movie or book.</p>
-      <p>A few pages for some of the people who matter most:</p>
-      <ul class="links">
-        <li><a href="${u('[removed]')}">[removed] →</a></li>
-        <li><a href="${u('[removed]')}">[removed] →</a></li>
-      </ul>`,
+    body: `<p>My best days are spent with my beautiful wife and wonderful kids — running outdoors, training together, and enjoying a good movie or book.</p>`,
   })}
   ${feature({
     img: 'runner-icon.svg',
@@ -728,24 +723,6 @@ mwIDAQAB
       <div id="empty" class="empty-state" hidden>No quotes match the selected filters.</div>`),
     });
   }
-
-  // ==========================================================================
-  // Family pages
-  // ==========================================================================
-  add({
-    path: '[removed]',
-    title: '[removed] Wolfgang',
-    description: '[removed] Wolfgang’s page.',
-    body:
-      pageHead({ eyebrow: 'Family', title: '[removed] Wolfgang' }) +
-      section(`<div class="card center" style="max-width:640px;margin:0 auto"><p>Welcome to [removed]’s page!</p></div>`),
-  });
-  add({
-    path: '[removed]',
-    title: '[removed] Wolfgang',
-    description: '[removed] Wolfgang’s page.',
-    body: pageHead({ eyebrow: 'Family', title: '[removed] Wolfgang' }) + section(`<div class="card center" style="max-width:640px;margin:0 auto"><p>Welcome to [removed]’s page!</p></div>`),
-  });
 
   return pages;
 }

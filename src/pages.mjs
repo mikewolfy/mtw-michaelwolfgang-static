@@ -82,7 +82,6 @@ export function buildPages() {
       <ul class="links">
         <li><a href="${u('[removed]')}">[removed] →</a></li>
         <li><a href="${u('[removed]')}">[removed] →</a></li>
-        <li><a href="${u('[removed]')}">[removed] &amp; [removed] — still in love →</a></li>
       </ul>`,
   })}
   ${feature({
@@ -746,14 +745,6 @@ mwIDAQAB
     title: '[removed] Wolfgang',
     description: '[removed] Wolfgang’s page.',
     body: pageHead({ eyebrow: 'Family', title: '[removed] Wolfgang' }) + section(`<div class="card center" style="max-width:640px;margin:0 auto"><p>Welcome to [removed]’s page!</p></div>`),
-  });
-  add({
-    path: '[removed]',
-    title: '[removed] and [removed] — Still in Love',
-    description: 'Celebrating [removed] and [removed] Wolfgang.',
-    body:
-      pageHead({ eyebrow: 'Family', title: '[removed] and [removed] — still in love' }) +
-      section(`<div class="card center" style="max-width:640px;margin:0 auto"><p>Celebrating [removed] and [removed] Wolfgang!</p></div>`),
   });
 
   return pages;

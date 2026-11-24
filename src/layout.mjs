@@ -37,7 +37,6 @@ export const NAV = [
     items: [
       { label: '[removed]', path: '[removed]' },
       { label: '[removed]', path: '[removed]' },
-      { label: '[removed] & [removed]', path: '[removed]', desc: 'Still in love' },
     ],
   },
   {
@@ -116,7 +115,7 @@ function footer(root) {
     </div>
     <div class="footer-bottom">
       <span>&copy; ${new Date().getFullYear()} Michael Wolfgang. All rights reserved.</span>
-      <span>Family: <a href="${hrefFor(root, '[removed]')}">[removed]</a> · <a href="${hrefFor(root, '[removed]')}">[removed]</a> · <a href="${hrefFor(root, '[removed]')}">[removed] &amp; [removed]</a></span>
+      <span>Family: <a href="${hrefFor(root, '[removed]')}">[removed]</a> · <a href="${hrefFor(root, '[removed]')}">[removed]</a></span>
     </div>
   </div>
 </footer>`;

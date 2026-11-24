@@ -29,37 +29,37 @@ export function buildPages() {
   {
     const root = './';
     const u = (p) => hrefFor(root, p);
-    const feature = ({ img, alt, title, body }) => `
+    const feature = ({ img, alt, title, body, photo = false }) => `
       <article class="feature">
-        <div class="feature-art"><img src="images/${img}" alt="${esc(alt)}" width="400" height="400" loading="lazy"></div>
-        <div>${`<h2>${title}</h2>`}${body}</div>
+        <div class="feature-art${photo ? ' photo-art' : ''}"><img src="images/${img}" alt="${esc(alt)}" width="400" height="400" loading="lazy"></div>
+        <div><h2>${title}</h2>${body}</div>
       </article>`;
 
     const explore = [
-      ['🧰', 'Developer hub', 'Interview questions, podcasts, resources and handy tools.', 'developer'],
-      ['🔐', 'Scopes & Claims', 'A practical guide to securing APIs with OAuth scopes and JWT claims.', 'tech-docs/scopes-and-claims'],
-      ['📚', 'Book list', 'Books I’ve read or listened to, with notes and ratings.', 'booklist'],
-      ['💬', 'Quotes', 'A searchable collection of quotes on leadership and decisions.', 'quotes'],
+      ['📚', 'Book list', 'What I’ve been reading and listening to, with notes and ratings.', 'booklist'],
+      ['💬', 'Quotes', 'A searchable collection of quotes I keep coming back to.', 'quotes'],
       ['🏃', 'Pace calculator', 'Work out the pace you need for your next 5K to marathon.', 'pace-calculator'],
-      ['🧠', 'Personality tests', 'Myers-Briggs and the 5 Love Languages — both free and private.', 'myers-briggs'],
+      ['⏳', 'Life timers', 'A little perspective: countdowns to year-end, retirement and beyond.', 'life-timers'],
+      ['🧠', 'Personality tests', 'Myers-Briggs and the 5 Love Languages — free and private.', 'myers-briggs'],
+      ['🔤', 'Spell Press', 'Six letters, four words, beat the clock. A quick game I built.', 'games/spellpress'],
     ];
 
     add({
       path: '',
       title: 'Home',
       description:
-        'Michael Wolfgang — software engineer and architect at CarMax, marathon runner, investor and lifelong learner. Developer resources, tools, books and quotes.',
+        'The personal site of Michael Wolfgang — husband and dad, marathon runner, Tae Kwon Do black belt, reader, investor and software architect.',
       body: `
 <section class="hero">
   <div class="wrap">
     <div>
-      <p class="eyebrow">Software Engineer &amp; Architect</p>
-      <h1>Building useful software, one habit at a time.</h1>
-      <p class="lede">I’m Michael — I build enterprise applications and APIs on modern cloud technologies at ${ext(CARMAX, 'CarMax')}. Outside of work I’m a husband and dad, a Tae Kwon Do black belt, a marathon runner, an investor and a lifelong learner.</p>
+      <p class="eyebrow">Husband · Dad · Runner · Reader</p>
+      <h1>Hi, I’m Michael.</h1>
+      <p class="lede">Welcome to my little corner of the web. I’m a husband and dad, a marathon runner, a Tae Kwon Do black belt (right alongside my kids), an avid reader and a big believer in getting a little better every day. By day I build software at ${ext(CARMAX, 'CarMax')}.</p>
       <div class="hero-actions">
-        <a class="btn btn-light" href="${u('developer')}">Explore developer resources</a>
-        <a class="btn btn-outline-light" href="${u('about')}">About me</a>
-        <a class="btn btn-outline-light" href="${LINKEDIN}" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a class="btn btn-light" href="${u('about')}">More about me</a>
+        <a class="btn btn-outline-light" href="${u('booklist')}">What I’m reading</a>
+        <a class="btn btn-outline-light" href="${u('contact')}">Say hello</a>
       </div>
       <div class="hero-stats" aria-label="Highlights">
         <div><strong>20</strong><span>Marathons run</span></div>
@@ -68,37 +68,29 @@ export function buildPages() {
         <div><strong>Black belt</strong><span>Tae Kwon Do, as a family</span></div>
       </div>
     </div>
-    <div class="hero-art"><img src="images/dev-architecture.svg" alt="Software architecture illustration" width="400" height="400"></div>
+    <div class="hero-art"><img src="images/michael.jpg" alt="Michael Wolfgang" width="720" height="720"></div>
   </div>
 </section>
 
 <div class="wrap section stack">
   ${feature({
-    img: 'dev-architecture.svg',
-    alt: 'Software architecture illustration',
-    title: 'Software Engineer and Architect',
-    body: `<p>I spend my days having fun building enterprise applications and APIs using cloud technologies at ${ext(CARMAX, 'CarMax')}. Today’s cloud technologies make it really fun &amp; easy to apply my experience and deliver quick value to customers and clients. Part of the fun is that there’s always room to continue improving and learning (like life).</p>
+    img: 'family-christmas.jpg',
+    alt: 'The Wolfgang family together at Christmas',
+    photo: true,
+    title: 'Family first',
+    body: `<p>My best days are spent with my beautiful wife and wonderful kids — running outdoors, training together, and enjoying a good movie or book.</p>
+      <p>A few pages for some of the people who matter most:</p>
       <ul class="links">
-        <li><a href="${u('developer/resources')}">Azure, .NET &amp; software resources →</a></li>
-        <li><a href="${u('tech-docs/ciam-resources')}">CIAM resources →</a></li>
-        <li><a href="${u('developer/podcasts')}">Podcasts I follow →</a></li>
-        <li>${ext(LINKEDIN, 'Contact me on LinkedIn ↗')}</li>
+        <li><a href="${u('[removed]')}">[removed] →</a></li>
+        <li><a href="${u('[removed]')}">[removed] →</a></li>
+        <li><a href="${u('[removed]')}">[removed] &amp; [removed] — still in love →</a></li>
       </ul>`,
-  })}
-  ${feature({
-    img: 'finance-growth.svg',
-    alt: 'Personal finance growth illustration',
-    title: 'Personal Finance and Investing',
-    body: `<p>Personal finance is an important aspect of any adult’s life, especially for those of us that have kids and families depending on us. The basics are really pretty simple, but are not very well understood by the vast population. We spend more time researching our next TV than we do our investment options. I’ve started to put some of my knowledge out on the web on my own website.</p>
-      <h3>3 major keys to individual investing success</h3>
-      <ol><li>Minimize costs (taxes and fees)</li><li>Minimize risk through diversification</li><li>Eliminate emotion by automating investing and rebalancing</li></ol>
-      <p>Check out my little investing site running in the cloud: ${ext(PRUDENT, 'prudentheed.com ↗')}</p>`,
   })}
   ${feature({
     img: 'runner-icon.svg',
     alt: 'Runner illustration',
     title: 'Runner',
-    body: `<p>I’m an avid runner, and I’m proud of my running accomplishments. I have:</p>
+    body: `<p>I’m an avid runner, and running has given me some of my favorite memories — including meeting my wife. I have:</p>
       <ul class="checklist">
         <li>Run 20 marathons and over 17 half marathons.</li>
         <li>Met my beautiful wife through running.</li>
@@ -109,29 +101,52 @@ export function buildPages() {
         <li>Run a marathon to the top of Pikes Peak during a thunder storm.</li>
         <li>Run in the top 100 finishers of the local 27,000+ Ukrops Monument 10K.</li>
       </ul>
-      <p>Check out all of my races on ${ext(ATHLINKS, 'Athlinks ↗')}.</p>`,
-  })}
-  ${feature({
-    img: 'learning-icon.svg',
-    alt: 'Continuous learning illustration',
-    title: 'Student / Learner',
-    body: `<p>I’m a big believer in constant improvement. I like listening to podcasts and keep current with investing and software. Learning is a habit that pays exponential dividends over time. The older I get, the less free time I seem to have, so I’m constantly curating my sources of podcasts and articles to get the most out of my time.</p>
       <ul class="links">
-        <li><a href="${u('booklist')}">Books I’ve been reading or listening to →</a></li>
-        <li><a href="${u('developer/podcasts')}">My favorite podcasts →</a></li>
+        <li>${ext(ATHLINKS, 'All my races on Athlinks ↗')}</li>
+        <li><a href="${u('pace-calculator')}">Pace calculator →</a></li>
       </ul>`,
   })}
   ${feature({
     img: 'tae-kwon-do-belt.svg',
     alt: 'Tae Kwon Do belt illustration',
-    title: 'Tae Kwon Do, as a Family',
+    title: 'Tae Kwon Do, as a family',
     body: `<p>Tae Kwon Do has been one of our family’s longest-running commitments. My kids and I have trained together for years, and every one of us has earned a black belt along the way.</p>
       <p>Getting there wasn’t quick or easy — it took years of consistent practice, showing up on the hard days, and pushing through plateaus together. That shared effort is what made it worthwhile: we didn’t just get a belt, we built a habit of discipline and perseverance as a family, and we keep training together to this day.</p>`,
+  })}
+  ${feature({
+    img: 'learning-icon.svg',
+    alt: 'Open book illustration',
+    title: 'Reader and lifelong learner',
+    body: `<p>I’m a big believer in constant improvement. Learning is a habit that pays exponential dividends over time. The older I get, the less free time I seem to have, so I’m always curating the books, podcasts and articles that make the most of it — from leadership and psychology to a good Jack Reacher or Thursday Murder Club story.</p>
+      <ul class="links">
+        <li><a href="${u('booklist')}">My book list →</a></li>
+        <li><a href="${u('quotes')}">Favorite quotes →</a></li>
+        <li><a href="${u('developer/podcasts')}">Podcasts I listen to →</a></li>
+      </ul>`,
+  })}
+  ${feature({
+    img: 'finance-growth.svg',
+    alt: 'Personal finance growth illustration',
+    title: 'Personal finance and investing',
+    body: `<p>Personal finance is an important part of any adult’s life, especially for those of us with kids and families depending on us. The basics are pretty simple, but not very well understood — we spend more time researching our next TV than our investment options.</p>
+      <h3>3 major keys to individual investing success</h3>
+      <ol><li>Minimize costs (taxes and fees)</li><li>Minimize risk through diversification</li><li>Eliminate emotion by automating investing and rebalancing</li></ol>
+      <p>I share more on my little investing site: ${ext(PRUDENT, 'prudentheed.com ↗')}</p>`,
+  })}
+  ${feature({
+    img: 'dev-architecture.svg',
+    alt: 'Software illustration',
+    title: 'What I do for work',
+    body: `<p>Professionally, I’m a software engineer and architect at ${ext(CARMAX, 'CarMax')}, building applications and APIs on cloud technologies. Part of the fun is that there’s always room to keep improving and learning (like life).</p>
+      <ul class="links">
+        <li><a href="${u('developer')}">Work &amp; tech corner →</a></li>
+        <li>${ext(LINKEDIN, 'LinkedIn ↗')}</li>
+      </ul>`,
   })}
 </div>
 
 <div class="wrap section tight" style="padding-top:0">
-  <h2>Explore the site</h2>
+  <h2>Just for fun</h2>
   <div class="grid cols-3" style="margin-top:1.25rem">
     ${explore
       .map(
@@ -149,21 +164,31 @@ export function buildPages() {
   add({
     path: 'about',
     title: 'About',
-    description: 'About Michael Wolfgang — software engineer and architect, husband and father, Tae Kwon Do black belt, runner and lifelong learner.',
+    description: 'About Michael Wolfgang — husband and father, marathon runner, Tae Kwon Do black belt, reader and software architect.',
     body:
-      pageHead({ eyebrow: 'About', title: 'About me', lede: 'Software engineer, runner, investor, and lifelong learner.' }) +
+      pageHead({ eyebrow: 'About', title: 'About me', lede: 'Husband, dad, runner, reader, and lifelong learner.' }) +
       section(`
-      <div class="stack prose" style="max-width:820px">
-        <div class="card">
-          <h2 class="card-title">Michael Wolfgang</h2>
-          <p>I’m a Software Engineer and Architect with a passion for building enterprise applications and APIs using modern cloud technologies. I work at ${ext(CARMAX, 'CarMax')}, where I apply my experience to deliver value to customers and clients.</p>
-          <p>Beyond my professional work, I’m a husband and father, a Tae Kwon Do black belt and an avid runner. My best days are spent with my beautiful wife and wonderful kids, running outdoors, and enjoying a good movie or book.</p>
-          <p>I regularly listen to podcasts, read books, and stay current with the latest in software engineering, cloud computing, self improvement and personal finance.</p>
+      <div class="stack" style="max-width:860px">
+        <div class="card about-intro">
+          <img src="../images/michael.jpg" alt="Michael Wolfgang" width="180" height="180">
+          <div>
+            <h2 class="card-title">Hi, I’m Michael</h2>
+            <p>I’m a husband and father, a Tae Kwon Do black belt and an avid runner. My best days are spent with my beautiful wife and wonderful kids, running outdoors, and enjoying a good movie or book.</p>
+            <p>I regularly listen to podcasts, read books, and try to stay curious about self improvement, personal finance and whatever I’m learning next.</p>
+          </div>
         </div>
         <div class="card">
-          <h2 class="card-title">Tae Kwon Do, as a Family</h2>
+          <h2 class="card-title">Tae Kwon Do, as a family</h2>
           <p>Tae Kwon Do has been one of our family’s longest-running commitments. My kids and I have trained together for years, and every one of us has earned a black belt along the way.</p>
           <p>Getting there wasn’t quick or easy — it took years of consistent practice, showing up on the hard days, and pushing through plateaus together. That shared effort is what made it worthwhile: we didn’t just get a belt, we built a habit of discipline and perseverance as a family, and we keep training together to this day.</p>
+        </div>
+        <div class="card">
+          <h2 class="card-title">Running</h2>
+          <p>Twenty marathons, more than seventeen half marathons, a Boston qualifier, a thunderstorm run to the top of Pikes Peak — and I met my wife through running. You can find all of my races on ${ext(ATHLINKS, 'Athlinks')}.</p>
+        </div>
+        <div class="card">
+          <h2 class="card-title">Work</h2>
+          <p>By day I’m a software engineer and architect at ${ext(CARMAX, 'CarMax')}, building applications and APIs with modern cloud technologies. If that’s your thing too, take a look at my <a href="../developer/">work &amp; tech corner</a>.</p>
         </div>
       </div>`),
   });
@@ -212,10 +237,10 @@ export function buildPages() {
       `<a class="card card-link" href="${u(path)}"><div class="card-icon" aria-hidden="true">${icon}</div><h3>${title}</h3><p>${desc}</p><span class="more">Open →</span></a>`;
     add({
       path: 'developer',
-      title: 'Developer Hub',
+      title: 'Work & Tech',
       description: 'Developer resources from Michael Wolfgang: interview questions, podcasts, learning resources, JWT and RSA tools, and technical docs.',
       body:
-        pageHead({ eyebrow: 'Developer', title: 'Developer hub', lede: 'Learning resources, practice questions, and handy tools from my day-to-day work in cloud and identity.' }) +
+        pageHead({ eyebrow: 'Work & Tech', title: 'Work & tech corner', lede: 'Software is how I spend my workdays. Here are the learning resources, practice questions, and handy tools from my work in cloud and identity.' }) +
         section(`
         <h2>Learn &amp; practice</h2>
         <div class="grid cols-3" style="margin:1rem 0 2.5rem">
@@ -281,10 +306,10 @@ export function buildPages() {
       scripts: ['interview.js'],
       body:
         pageHead({
-          eyebrow: 'Developer',
+          eyebrow: 'Work & Tech',
           title: 'Interview questions',
           lede: 'Practice common interview questions across different categories. Tap a question to reveal the answer.',
-          crumbs: [{ label: 'Developer', href: hrefFor(root, 'developer') }, { label: 'Interview Questions' }],
+          crumbs: [{ label: 'Work & Tech', href: hrefFor(root, 'developer') }, { label: 'Interview Questions' }],
         }) +
         section(`
         <div class="tabs" role="tablist" aria-label="Question category">
@@ -319,13 +344,13 @@ export function buildPages() {
     add({
       path: 'developer/podcasts',
       title: 'Favorite Podcasts',
-      description: 'The tech, security, business and news podcasts Michael Wolfgang listens to during his commute and runs.',
+      description: 'The podcasts Michael Wolfgang listens to during his commute and runs — tech, business, ideas and news.',
       body:
         pageHead({
-          eyebrow: 'Developer',
+          eyebrow: 'Listening',
           title: 'Favorite podcasts',
           lede: 'Podcasts I listen to during my commute and on runs.',
-          crumbs: [{ label: 'Developer', href: hrefFor(root, 'developer') }, { label: 'Podcasts' }],
+          
         }) +
         section(`<div class="grid cols-3">${podcasts
           .map(
@@ -351,10 +376,10 @@ export function buildPages() {
       description: 'Essential learning resources for Azure, .NET and software engineering.',
       body:
         pageHead({
-          eyebrow: 'Developer',
+          eyebrow: 'Work & Tech',
           title: 'Developer resources',
           lede: 'Essential learning resources for Azure, .NET, and software engineering.',
-          crumbs: [{ label: 'Developer', href: hrefFor(root, 'developer') }, { label: 'Resources' }],
+          crumbs: [{ label: 'Work & Tech', href: hrefFor(root, 'developer') }, { label: 'Resources' }],
         }) +
         section(`<div class="grid cols-3">${groups
           .map(([t, items]) => `<div class="card"><h2 class="card-title">${t}</h2><ul class="link-list">${items.map(([l, h]) => `<li>${ext(h, l, 'ext')}</li>`).join('')}</ul></div>`)
@@ -396,7 +421,7 @@ export function buildPages() {
           eyebrow: 'Technical docs',
           title: 'CIAM technical resources',
           lede: 'Blogs, practitioner communities, and learning paths to stay current on customer identity trends.',
-          crumbs: [{ label: 'Developer', href: hrefFor(root, 'developer') }, { label: 'CIAM Resources' }],
+          crumbs: [{ label: 'Work & Tech', href: hrefFor(root, 'developer') }, { label: 'CIAM Resources' }],
         }) +
         section(`<div class="stack" style="max-width:860px">${groups
           .map(([t, items]) => `<div class="card"><h2 class="card-title">${t}</h2><ul class="link-list">${items.map(([l, h, d]) => `<li>${ext(h, l, 'ext')}<p>${d}</p></li>`).join('')}</ul></div>`)
@@ -418,7 +443,7 @@ export function buildPages() {
           eyebrow: 'Technical docs',
           title: 'Securing APIs with scopes & claims',
           lede: 'A practical guide to how OAuth 2.0 scopes and JWT claims work together to protect backend APIs — covering authorization flows, token validation, and enforcement patterns.',
-          crumbs: [{ label: 'Developer', href: hrefFor(root, 'developer') }, { label: 'Scopes & Claims' }],
+          crumbs: [{ label: 'Work & Tech', href: hrefFor(root, 'developer') }, { label: 'Scopes & Claims' }],
         }) + section(`<div style="max-width:880px">${readContent('scopes-and-claims.html')}
         <p class="muted small">Tip: paste a token into the <a href="${hrefFor(root, 'developer/jwt-decoder')}">JWT Decoder</a> to inspect the claims described above.</p></div>`),
     });
@@ -439,7 +464,7 @@ export function buildPages() {
           eyebrow: 'Developer tool',
           title: 'JWT decoder',
           lede: 'Decode and inspect JSON Web Tokens. Everything happens locally in your browser — the token is never sent anywhere.',
-          crumbs: [{ label: 'Developer', href: hrefFor(root, 'developer') }, { label: 'JWT Decoder' }],
+          crumbs: [{ label: 'Work & Tech', href: hrefFor(root, 'developer') }, { label: 'JWT Decoder' }],
         }) +
         section(`
       <div class="stack">
@@ -482,7 +507,7 @@ export function buildPages() {
           eyebrow: 'Developer tool',
           title: 'RSA signature validator',
           lede: 'Verify RSA-signed strings using a public key. Verification runs locally with the Web Crypto API — your data and keys never leave your device.',
-          crumbs: [{ label: 'Developer', href: hrefFor(root, 'developer') }, { label: 'RSA Validator' }],
+          crumbs: [{ label: 'Work & Tech', href: hrefFor(root, 'developer') }, { label: 'RSA Validator' }],
         }) +
         section(`
       <div class="stack">

@@ -68,15 +68,14 @@ export function buildPages() {
         <div><strong>Black belt</strong><span>Tae Kwon Do, as a family</span></div>
       </div>
     </div>
-    <div class="hero-art"><img src="images/michael.jpg" alt="Michael Wolfgang" width="720" height="720"></div>
+    <div class="hero-art"><img src="images/runner-icon.svg" alt="Runner illustration" width="400" height="400"></div>
   </div>
 </section>
 
 <div class="wrap section stack">
   ${feature({
-    img: 'family-christmas.jpg',
-    alt: 'The Wolfgang family together at Christmas',
-    photo: true,
+    img: 'family-heart.svg',
+    alt: 'Heart illustration',
     title: 'Family first',
     body: `<p>My best days are spent with my beautiful wife and wonderful kids — running outdoors, training together, and enjoying a good movie or book.</p>
       <p>A few pages for some of the people who matter most:</p>
@@ -169,8 +168,7 @@ export function buildPages() {
       pageHead({ eyebrow: 'About', title: 'About me', lede: 'Husband, dad, runner, reader, and lifelong learner.' }) +
       section(`
       <div class="stack" style="max-width:860px">
-        <div class="card about-intro">
-          <img src="../images/michael.jpg" alt="Michael Wolfgang" width="180" height="180">
+        <div class="card">
           <div>
             <h2 class="card-title">Hi, I’m Michael</h2>
             <p>I’m a husband and father, a Tae Kwon Do black belt and an avid runner. My best days are spent with my beautiful wife and wonderful kids, running outdoors, and enjoying a good movie or book.</p>
@@ -741,7 +739,7 @@ mwIDAQAB
     description: 'Reed Wolfgang’s page.',
     body:
       pageHead({ eyebrow: 'Family', title: 'Reed Wolfgang' }) +
-      section(`<div class="card center" style="max-width:640px;margin:0 auto"><img class="portrait" src="../images/reed.jpg" alt="Reed Wolfgang" width="220" height="220"><p>Welcome to Reed’s page!</p></div>`),
+      section(`<div class="card center" style="max-width:640px;margin:0 auto"><p>Welcome to Reed’s page!</p></div>`),
   });
   add({
     path: 'emma',
@@ -755,7 +753,7 @@ mwIDAQAB
     description: 'Celebrating Tim and Mary Ann Wolfgang.',
     body:
       pageHead({ eyebrow: 'Family', title: 'Tim and Mary Ann — still in love' }) +
-      section(`<div class="card center" style="max-width:640px;margin:0 auto"><img class="photo" src="../images/mom-dad-wedding-resized.JPG" alt="Tim and Mary Ann" width="460" height="345"><p>Celebrating Tim and Mary Ann Wolfgang!</p></div>`),
+      section(`<div class="card center" style="max-width:640px;margin:0 auto"><p>Celebrating Tim and Mary Ann Wolfgang!</p></div>`),
   });
 
   return pages;

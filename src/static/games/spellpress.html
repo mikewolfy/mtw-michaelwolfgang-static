@@ -336,6 +336,9 @@
   .feedback.bonus{ color: var(--amber); }
 
   /* found words */
+  .poss{
+    text-align:center; color: var(--muted); font-size: 0.78rem; margin: 0 0 12px 0;
+  }
   .found-title{
     font-size: 0.72rem;
     text-transform:uppercase;
@@ -415,7 +418,7 @@
         <span>seconds &mdash; leave blank to use a preset above</span>
       </div>
       <p class="rules">
-        You'll get <b>6 letters</b> (always a mix of vowels &amp; consonants). Tap tiles to build <b>4-letter words</b>. Each valid word scores points based on its letters; complete <b>4 words</b> from one set to earn a bonus and get a fresh set of letters. Score as much as you can before time runs out.
+        You'll get <b>6 letters</b> (3 vowels &amp; 3 consonants). Tap tiles to build <b>4-letter words</b> &mdash; you can use each letter as many times as you like. Words with more <b>different letters</b> score more; find <b>4 words</b> from one set to earn a <b>+50 bonus</b> and a fresh set of letters. Score as much as you can before time runs out.
       </p>
       <button class="primary" id="startBtn">Start round</button>
     </div>
@@ -435,6 +438,7 @@
     </div>
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 
+    <div class="poss" id="possLine"></div>
     <div class="tile-row" id="tileRow"></div>
 
     <div class="stage-label">your word</div>
@@ -475,151 +479,59 @@
 
 </div>
 
+<script src="spellpress-data.js"></script>
 <script>
 (function(){
 
-  /* ---------------- Word list ---------------- */
-  var WORDLIST = (
-    "ABLE ACHE ACID ACNE ACRE ACT ACTS ADDS AFAR AGED AGES AGOG AIDE AILS AIMS AIRY AJAR ALAS ALES ALGA ALIT ALLY ALMS ALOE ALSO ALTO AMEN AMID AMMO AMPS ANEW ANTE ANTS APEX APED APES ARCH AREA ARIA ARID ARKS ARMS ARMY ARTS ASHY ASIA ASKS ATOM ATOP AUNT AURA AUTO AVID AWAY AWED AWES AXED AXES AXIS AXLE AYES " +
-    "BABE BABY BACK BADE BAGS BAIL BAIT BAKE BALD BALE BALK BALL BALM BAND BANE BANG BANK BARB BARD BARE BARK BARN BASE BASH BASK BASS BATH BATS BAWL BEAD BEAK BEAM BEAN BEAR BEAT BEDS BEEF BEEN BEEP BEER BEES BELL BELT BEND BENT BERG BEST BETA BIAS BIDE BIDS BIER BIKE BILE BILL BIND BIRD BITE BITS BLAB BLED BLIP BLOB BLOC BLOG BLOT BLOW BLUE BLUR BOAR BOAT BOBS BODE BODY BOGS BOIL BOLD BOLT BOMB BOND BONE BONY BOOK BOOM BOON BOOT BORE BORN BOSS BOTH BOUT BOWL BOWS BOXY BOYS BRAG BRAN BRAT BRAY BRED BREW BRIG BRIM BROW BUCK BUDS BUFF BUGS BULB BULK BULL BUMP BUNK BUNS BURN BURP BURY BUSH BUSY BUTT BUTS BUYS BUZZ BYTE " +
-    "CABS CAFE CAGE CAKE CALF CALL CALM CAME CAMP CANE CANS CAPE CAPS CARD CARE CARP CART CASE CASH CASK CAST CATS CAVE CELL CENT CHAP CHAT CHEF CHEW CHIC CHIN CHIP CHOP CHUG CHUM CITE CITY CLAD CLAM CLAN CLAP CLAW CLAY CLIP CLOD CLOG CLOP CLOT CLUB CLUE COAL COAT CODE COIL COIN COKE COLD COLT COMB COME CONE COOK COOL COOP COPE COPS COPY CORD CORE CORK CORN COST COSY COTE COVE COWL COZY CRAB CRAG CRAM CRAY CREW CRIB CROP CROW CRUD CRUX CUBE CUBS CUFF CULT CUPS CURB CURD CURE CURL CURT CUSP CUTE CZAR " +
-    "DABS DAME DAMP DARE DARK DART DASH DATA DATE DAWN DAYS DEAD DEAF DEAL DEAN DEAR DEBT DECK DEED DEEM DEEP DEER DEFY DELI DEMO DENS DENT DENY DESK DEWY DIAL DICE DIET DIGS DIME DINE DING DINS DIRE DIRT DISC DISH DISK DIVA DIVE DOCK DOES DOGS DOLE DOLL DOME DONE DONS DOOM DOOR DOSE DOTS DOUR DOVE DOWN DOZE DRAB DRAG DRAM DRAW DREW DRIP DROP DRUB DRUG DRUM DUAL DUCK DUCT DUDS DUEL DUET DUKE DULL DUMP DUNE DUNK DUOS DUSK DUST DUTY " +
-    "EACH EARL EARN EARS EASE EAST EASY ECHO EDDY EDGE EDIT EELS EGGS ELAN ELKS ELMS EMIT ENDS EPIC ERAS ERGO ERGS ERRS ETCH EURO EVEN EVER EVIL EWES EXAM EXES EXIT EYED EYES " +
-    "FACE FACT FADE FAIL FAIR FAKE FALL FAME FANG FANS FARE FARM FAST FATE FAWN FEAR FEAT FEED FEEL FEES FEET FELL FELT FEND FERN FEST FETE FEUD FIAT FIBS FIGS FILE FILL FILM FIND FINE FINS FIRE FIRM FISH FIST FITS FIVE FLAB FLAG FLAP FLAT FLAW FLAX FLEA FLED FLEE FLEW FLEX FLIP FLIT FLOG FLOP FLOW FLUB FLUE FLUX FOAL FOAM FOES FOGS FOIL FOLD FOLK FOND FONT FOOD FOOL FOOT FORD FORE FORK FORM FORT FOUL FOUR FOWL FOXY FRAY FREE FRET FROG FROM FUEL FULL FUME FUND FUNK FURS FURY FUSE FUSS " +
-    "GABS GAGS GAIN GALA GALE GAME GANG GAPS GASH GASP GATE GAVE GAZE GEAR GEEK GELS GEMS GENE GERM GIFT GILL GILT GIRL GIVE GLAD GLEE GLIB GLOB GLOW GLUE GNAT GNAW GOAD GOAL GOAT GOBS GODS GOES GOLD GOLF GONE GONG GOOD GOOF GOOP GORE GOSH GOWN GRAB GRAD GRAM GRAY GREW GREY GRID GRIM GRIN GRIP GRIT GROW GRUB GULF GULL GULP GUMS GUNK GUNS GUSH GUST GUTS GUYS GYMS " +
-    "HAIL HAIR HALE HALF HALL HALO HALT HAND HANG HARD HARE HARK HARM HARP HASH HAST HATE HAUL HAVE HAWK HAYS HAZE HAZY HEAD HEAL HEAP HEAR HEAT HECK HEED HEEL HEIR HELD HELL HELM HELP HERB HERD HERE HERO HERS HIDE HIGH HIKE HILL HINT HIPS HIRE HISS HIVE HOAX HOBO HOED HOES HOLD HOLE HOLY HOME HONE HONK HOOD HOOF HOOK HOOP HOOT HOPE HOPS HORN HOSE HOST HOUR HOWL HUBS HUES HUFF HUGE HUGS HULK HULL HUMP HUNK HUNT HURL HURT HUSH HYMN HYPE " +
-    "ICED ICES ICON IDEA IDLE IDOL ILLS IMPS INCH INFO INKS INTO IONS IRIS IRKS IRON ITCH ITEM " +
-    "JABS JADE JAIL JAMS JARS JAWS JAZZ JEAN JEEP JEER JELL JERK JEST JETS JIBE JIGS JIVE JOBS JOCK JOGS JOIN JOKE JOLT JOWL JOYS JUDO JUGS JULY JUMP JUNE JUNK JURY JUST JUTE " +
-    "KEEL KEEN KEEP KELP KEPT KEYS KICK KIDS KILL KILN KILO KIND KING KISS KITE KIWI KNEE KNEW KNIT KNOB KNOT KNOW " +
-    "LACE LACK LACY LADS LADY LAID LAIN LAIR LAKE LAMB LAME LAMP LAND LANE LAPS LARD LARK LASH LAST LATE LAUD LAVA LAWN LAWS LAZE LAZY LEAD LEAF LEAK LEAN LEAP LEEK LEER LEFT LEGS LEND LENS LENT LESS LEST LETS LIAR LICE LICK LIED LIEN LIES LIFE LIFT LIKE LILY LIMB LIME LIMP LINE LINK LINT LION LIPS LISP LIST LIVE LOAD LOAF LOAN LOBE LOCK LOFT LOGO LOGS LONE LONG LOOK LOOM LOON LOOP LOOT LORD LORE LOSE LOSS LOST LOTS LOUD LOVE LUCK LUGS LUMP LUNG LURE LURK LUSH LUST LUTE LYNX " +
-    "MACE MADE MAID MAIL MAIM MAIN MAKE MALE MALL MANE MANS MANY MAPS MARE MARK MARS MASH MASK MASS MAST MATE MATH MAZE MEAD MEAL MEAN MEAT MEEK MEET MELD MELT MEMO MEND MENU MERE MESH MESS MICE MICS MIDI MILD MILE MILK MILL MIME MIND MINE MINT MISS MIST MITE MOAN MOAT MOCK MODE MODS MOLD MOLE MONK MOOD MOON MOOR MOOT MOPE MOPS MORE MOSS MOST MOTH MOVE MUCH MUCK MUFF MUGS MULE MUMS MURK MUSE MUSH MUSK MUST MUTE MYTH " +
-    "NABS NAGS NAIL NAME NAPE NAPS NAVY NEAR NEAT NECK NEED NEON NERD NEST NETS NEWS NEWT NEXT NIBS NICE NICK NINE NIPS NODE NODS NONE NOON NOPE NORM NOSE NOTE NOUN NUBS NUDE NUKE NULL NUMB NUNS NUTS " +
-    "OAKS OARS OATH OATS OBEY OBOE ODDS ODOR OGLE OGRE OILY OKAY OMEN OMIT ONCE ONES ONLY ONTO OOZE OPAL OPEN OPTS ORAL ORBS ORCA ORES OUCH OUST OUTS OVAL OVEN OVER OWED OWES OWLS OWNS OXEN " +
-    "PACE PACK PACT PADS PAGE PAID PAIL PAIN PAIR PALE PALM PANE PANG PANS PANT PARE PARK PART PASS PAST PATH PAVE PAWN PAWS PEAK PEAL PEAR PEAS PEAT PECK PEEK PEEL PEEP PEER PENS PEON PERK PERT PEST PETS PICK PIED PIER PIES PIGS PIKE PILE PILL PINE PINK PINS PINT PIPE PITH PITS PITY PLAN PLAT PLAY PLEA PLOD PLOP PLOT PLOW PLOY PLUG PLUM PLUS POEM POET POKE POLE POLL POMP POND PONY POOL POOR PORE PORK PORT POSE POSH POST POUR PRAM PRAY PREP PREY PRIM PROD PROM PROP PROS PROW PUBS PUCK PUFF PUGS PULL PULP PUMA PUMP PUNK PUNY PUPA PUPS PURE PUSH PUTT PYRE " +
-    "QUAD QUAY QUIP QUIT QUIZ " +
-    "RACE RACK RAFT RAGE RAGS RAID RAIL RAIN RAKE RAMP RAMS RANG RANK RANT RAPS RARE RASH RATE RATS RAVE RAYS RAZE READ REAL REAP REAR REDO REDS REED REEF REEK REEL RELY REND RENT REST RIBS RICE RICH RIDE RIFE RIFT RIGS RILE RIME RIND RING RINK RIOT RIPE RISE RISK RITE ROAD ROAM ROAR ROBE ROBS ROCK RODE ROLE ROLL ROOF ROOM ROOT ROPE ROSE ROSY ROTS ROUT ROVE ROWS RUBS RUDE RUES RUGS RUIN RULE RUMP RUNG RUNS RUNT RUSE RUSH RUST RUTS " +
-    "SACK SAFE SAGA SAGE SAID SAIL SAKE SALE SALT SAME SAND SANE SAPS SASH SASS SAVE SAWS SAYS SCAB SCAM SCAN SCAR SCUD SCUM SEAL SEAM SEAR SEAS SEAT SECT SEED SEEK SEEM SEEN SEEP SEES SELF SELL SEMI SEND SENT SEPT SETS SEWN SHED SHIN SHIP SHOD SHOE SHOO SHOP SHOT SHOW SHUN SHUT SICK SIDE SIFT SIGH SIGN SILK SILL SILO SILT SING SINK SIPS SITE SITS SIZE SKID SKIM SKIN SKIP SKIT SLAB SLAM SLAP SLAT SLAW SLAY SLED SLEW SLID SLIM SLIP SLIT SLOB SLOG SLOP SLOT SLOW SLUG SLUM SLUR SMOG SNAG SNAP SNIP SNOB SNOT SNOW SOAK SOAP SOAR SOBS SOCK SODA SOFA SOFT SOIL SOLD SOLE SOME SONG SOON SOOT SORE SORT SOUL SOUP SOUR SOWN SPAN SPAR SPAS SPAT SPAY SPED SPIN SPIT SPOT SPRY SPUD SPUN SPUR STAB STAG STAR STAY STEM STEP STEW STIR STOP STOW STUB STUD STUN SUCH SUDS SUED SUES SUIT SUMO SUMS SUNK SUNS SURE SURF SWAB SWAM SWAN SWAP SWAT SWAY SWIG SWIM SWUM " +
-    "TABS TACK TACO TACT TAGS TAIL TAKE TALE TALK TALL TAME TANK TAPE TAPS TART TASK TAUT TAXI TEAL TEAM TEAR TEAS TECH TEEN TEES TELL TEMP TEND TENS TENT TERM TEST TEXT THAN THAT THAW THEE THEM THEN THEY THIN THIS THUD THUG THUS TICK TIDE TIDY TIED TIER TIES TILE TILL TILT TIME TINE TINT TINY TIPS TIRE TOAD TOES TOFU TOIL TOLD TOLL TOMB TONE TONS TOOK TOOL TOOT TOPS TORE TORN TOSS TOTE TOUR TOWN TOYS TRAM TRAY TREE TREK TREY TRIM TRIO TRIP TROD TRUE TUBE TUBS TUCK TUFT TUGS TUNA TUNE TURF TURN TUSK TWIG TWIN TWIT " +
-    "UGLY ULNA UNDO UNIT UNTO UPON URGE URNS USED USER USES " +
-    "VAIN VALE VANE VARY VASE VAST VATS VEAL VEIL VEIN VENT VERB VERY VEST VETO VIAL VIBE VICE VIEW VILE VINE VISA VOID VOLE VOTE VOWS " +
-    "WADE WAGE WAGS WAIL WAIT WAKE WALK WALL WAND WANE WANT WARD WARE WARM WARN WARP WARS WART WARY WASH WASP WAVE WAVY WAXY WAYS WEAK WEAN WEAR WEED WEEK WEEP WEPT WERE WEST WETS WHAT WHEN WHIM WHIP WHIT WHIZ WHOA WICK WIDE WIFE WILD WILL WILT WIMP WIND WINE WING WINK WINS WIPE WIRE WISE WISH WITH WOES WOKE WOLF WOMB WOOD WOOF WOOL WORD WORE WORK WORM WORN WRAP WREN WRIT " +
-    "YAMS YARD YARN YAWN YEAH YEAR YELL YEWS YOGA YOKE YOLK YOUR YOWL " +
-    "ZAGS ZANY ZAPS ZEAL ZERO ZEST ZINC ZONE ZOOM"
-  ).split(/\s+/);
-  var WORDLIST_EXTRA = (
-    "WELL EATS SANK SUNG RANG RUNG SANG SING SONG STUN SPUN SPAN AXED OXES YOLK YARN LORN WORN TORN BORN SHOD TROD PLOD CLOD SCOD " +
-    "TOWS SOWS ROWS BOWS COWS MOWS VOWS NOWS HOWS WOWS JOWS " +
-    "CARS BARS EARS TARS WARS JARS OARS MARS PARS FIRS STIR TSAR " +
-    "GALS PALS FALS(no) " +
-    "MAPS TAPS CAPS NAPS SAPS LAPS RAPS GAPS ZAPS " +
-    "BEDS FEDS REDS WEDS " +
-    "DENS HENS TENS PENS FENS LENS " +
-    "BITS FITS HITS KITS PITS SITS WITS " +
-    "BUNS FUNS GUNS NUNS PUNS RUNS SUNS DUNS " +
-    "COTS DOTS HOTS JOTS LOTS POTS ROTS SOTS TOTS " +
-    "CUBS DUBS HUBS PUBS RUBS SUBS TUBS " +
-    "BOWS ROWS " +
-    "GELS " +
-    "HAMS JAMS RAMS YAMS DAMS " +
-    "PANS BANS CANS FANS MANS TANS VANS " +
-    "DENT GENT LENT RENT SENT TENT VENT WENT BENT CENT DENT " +
-    "COOL FOOL POOL TOOL WOOL " +
-    "BOOK COOK HOOK LOOK NOOK ROOK TOOK " +
-    "BOOM DOOM LOOM ROOM ZOOM " +
-    "BOOT FOOT HOOT LOOT ROOT SOOT TOOT " +
-    "BOSS LOSS MOSS TOSS " +
-    "FUSS MUSS " +
-    "BUSY BULK HULK SULK " +
-    "CHAP CLAP FLAP SLAP SNAP TRAP WRAP " +
-    "BLOT CLOT PLOT SLOT SHOT SPOT TROT " +
-    "BRAG DRAG FLAG SHAG SNAG STAG SWAG " +
-    "BLAM CLAM CRAM DRAM GRAM SLAM SWAM " +
-    "BRAN CLAN PLAN SCAN SPAN SWAN " +
-    "GRIN SKIN SPIN TWIN " +
-    "BRIM GRIM PRIM SLIM SWIM TRIM WHIM " +
-    "CHIN SHIN THIN " +
-    "BRAT CHAT FLAT SPAT THAT " +
-    "BLED FLED PLED SLED SPED " +
-    "STEM THEM " +
-    "STEP PREP " +
-    "GLOB SLOB SNOB " +
-    "STOW CROW GROW BLOW SLOW SHOW FLOW GLOW PLOW SNOW " +
-    "SILT LILT TILT WILT " +
-    "MILK SILK " +
-    "BALK CALK TALK WALK " +
-    "BALL CALL FALL GALL HALL MALL TALL WALL " +
-    "BELL CELL DELL FELL SELL TELL WELL YELL " +
-    "BILL DILL FILL GILL HILL KILL MILL PILL SILL WILL " +
-    "DOLL POLL ROLL TOLL " +
-    "BULL DULL FULL GULL HULL LULL MULL " +
-    "ADDS DADS INNS GIGS MAMA TUTU PURR FUZZ MITT APPS MOMS EBBS ZOOS " +
-    "ALLY JOLLY(no) " +
-    "EGGS AGOG GAGS GIGS " +
-    "SASS FUSS MUSS BOSS LOSS MOSS TOSS MISS KISS HISS PASS MASS BASS " +
-    "BUTT PUTT MATT(no) "
-  ).split(/\s+/).filter(function(w){ return /^[A-Z]{4}$/.test(w); });
-  WORDLIST_EXTRA.forEach(function(w){ WORDLIST.push(w); });
-  var WORDSET = new Set(WORDLIST);
+  /* ---------------- Letter sets & word lists ----------------
+     Logic shared with Word Sprint: every set is 3 vowels + 3 consonants and comes with the
+     COMPLETE list of 4-letter words it can spell (letters may repeat), so no real word is
+     rejected. Sets are dealt from a shuffled bag so none repeats until all have been seen. */
+  var WORDS_PER_SET = 4;
+  var SET_BONUS = 50;
+  var SETS = WS.sets.map(function(s){
+    return { letters: s.letters.split(""), words: new Set(s.words.split(" ")) };
+  });
 
-  /* ---------------- Letter data ---------------- */
-  var LETTER_VALUES = {
-    A:1,E:1,I:1,O:1,U:1,L:1,N:1,S:1,T:1,R:1,
-    D:2,G:2,
-    B:3,C:3,M:3,P:3,
-    F:4,H:4,V:4,W:4,Y:4,
-    K:5,
-    J:8,X:8,
-    Q:10,Z:10
-  };
-  var VOWEL_POOL = [
-    ["E",12],["A",9],["I",9],["O",8],["U",4]
-  ];
-  var CONSONANT_POOL = [
-    ["T",9],["N",6],["R",6],["S",6],["L",4],["D",4],["G",3],["C",3],
-    ["M",3],["P",3],["H",2],["B",2],["F",2],["Y",2],["W",2],["K",1],
-    ["V",1]
-  ];
-
-  function weightedPickUnique(pool, excludeSet){
-    var avail = pool.filter(function(p){ return !excludeSet.has(p[0]); });
-    var total = avail.reduce(function(s,p){return s+p[1];},0);
-    var r = Math.random()*total;
-    for (var i=0;i<avail.length;i++){
-      r -= avail[i][1];
-      if (r<=0) return avail[i][0];
+  function shuffle(a){
+    a = a.slice();
+    for (var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var t = a[i]; a[i]=a[j]; a[j]=t;
     }
-    return avail[avail.length-1][0];
+    return a;
   }
 
-  function generateLetterSet(){
-    var vowelCount = Math.random() < 0.5 ? 2 : 3;
-    var chosen = new Set();
-    var letters = [];
-    for (var i=0;i<vowelCount;i++){
-      var v = weightedPickUnique(VOWEL_POOL, chosen);
-      chosen.add(v);
-      letters.push(v);
+  // 10 points, plus 5 for every different letter beyond 2 (so STAR beats SEES)
+  function wordPoints(w){
+    return 10 + 5 * Math.max(0, new Set(w.split("")).size - 2);
+  }
+
+  function nextSet(){
+    if (!state.bag.length){
+      state.bag = shuffle(SETS.map(function(_, i){ return i; }));
+      if (state.bag[state.bag.length-1] === state.lastIdx) state.bag.reverse(); // no immediate repeat
     }
-    for (var j=0;j<6-vowelCount;j++){
-      var c = weightedPickUnique(CONSONANT_POOL, chosen);
-      chosen.add(c);
-      letters.push(c);
-    }
-    // shuffle
-    for (var k=letters.length-1;k>0;k--){
-      var idx = Math.floor(Math.random()*(k+1));
-      var tmp = letters[k]; letters[k]=letters[idx]; letters[idx]=tmp;
-    }
-    return letters.map(function(letter, i){
-      return { id: "t"+i, letter: letter, value: LETTER_VALUES[letter] };
+    state.lastIdx = state.bag.pop();
+    state.set = SETS[state.lastIdx];
+    state.tiles = shuffle(state.set.letters).map(function(letter, i){
+      return { id: "t"+i, letter: letter };
     });
+    state.foundThisSet = [];
+    state.stage = [];
+    possLine.textContent = "There are " + state.set.words.size + " possible words hiding in these letters";
   }
 
   /* ---------------- State ---------------- */
   var state = {
     roundSeconds: 120,
     timeLeft: 120,
+    deadline: 0,
     timerHandle: null,
+    bag: [],
+    lastIdx: -1,
+    set: null,
+    locked: false,
     score: 0,
     highScore: 0,
     tiles: [],
@@ -650,6 +562,7 @@
   var feedback = document.getElementById("feedback");
   var foundGrid = document.getElementById("foundGrid");
   var foundCount = document.getElementById("foundCount");
+  var possLine = document.getElementById("possLine");
 
   var finalScore = document.getElementById("finalScore");
   var newHighBadge = document.getElementById("newHighBadge");
@@ -729,8 +642,8 @@
     state.setsCompleted = 0;
     state.bestWord = null;
     state.foundThisSet = [];
-    state.tiles = generateLetterSet();
-    state.stage = [];
+    state.locked = false;
+    nextSet();
 
     startScreen.classList.add("hidden");
     endScreen.classList.add("hidden");
@@ -744,23 +657,26 @@
     setFeedback("", "");
 
     clearInterval(state.timerHandle);
-    state.timerHandle = setInterval(tick, 1000);
+    state.deadline = Date.now() + state.roundSeconds * 1000;
+    state.timerHandle = setInterval(tick, 200);
   }
 
+  // Deadline-based clock: stays accurate even if the tab is throttled
   function tick(){
-    state.timeLeft--;
-    updateTimeDisplay();
-    if (state.timeLeft <= 0){
+    var msLeft = Math.max(0, state.deadline - Date.now());
+    state.timeLeft = Math.ceil(msLeft / 1000);
+    updateTimeDisplay(msLeft);
+    if (msLeft <= 0){
       clearInterval(state.timerHandle);
       endGame();
     }
   }
 
-  function updateTimeDisplay(){
+  function updateTimeDisplay(msLeft){
     var m = Math.floor(state.timeLeft/60);
     var s = state.timeLeft%60;
     timeNum.textContent = m + ":" + (s<10?"0":"") + s;
-    var pct = Math.max(0, (state.timeLeft/state.roundSeconds)*100);
+    var pct = Math.max(0, ((msLeft === undefined ? state.timeLeft*1000 : msLeft)/(state.roundSeconds*1000))*100);
     progressFill.style.width = pct + "%";
     var warn = state.timeLeft <= 10;
     timeNum.classList.toggle("warn", warn);
@@ -796,7 +712,7 @@
       var count = state.stage.filter(function(id){ return id===t.id; }).length;
       var el = document.createElement("div");
       el.className = "tile" + (count>0 ? " active" : "");
-      el.innerHTML = t.letter + '<span class="val">' + t.value + '</span>' +
+      el.innerHTML = t.letter +
         (count>0 ? '<span class="use-count">' + count + '</span>' : "");
       el.addEventListener("click", function(){
         selectTile(t.id);
@@ -827,7 +743,7 @@
   }
 
   function selectTile(id){
-    if (state.stage.length >= 4) return;
+    if (state.locked || state.stage.length >= 4) return;
     var t = state.tiles.find(function(x){return x.id===id;});
     if (!t) return;
     state.stage.push(id);
@@ -840,6 +756,7 @@
   }
 
   function removeFromStage(idx){
+    if (state.locked) return;
     var id = state.stage[idx];
     if (!id) return;
     state.stage.splice(idx,1);
@@ -848,6 +765,7 @@
   }
 
   function clearStage(){
+    if (state.locked) return;
     state.stage = [];
     renderTiles();
     renderStage();
@@ -863,7 +781,9 @@
   /* keyboard support */
   document.addEventListener("keydown", function(e){
     if (gameScreen.classList.contains("hidden")) return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
     var key = e.key.toUpperCase();
+    if (key === "ESCAPE"){ clearStage(); setFeedback("", ""); return; }
     if (key === "ENTER"){
       if (!submitBtn.disabled) submitWord();
       return;
@@ -879,7 +799,7 @@
   });
 
   function submitWord(){
-    if (state.stage.length !== 4) return;
+    if (state.locked || state.stage.length !== 4) return;
     var tiles = state.stage.map(function(id){ return state.tiles.find(function(x){return x.id===id;}); });
     var word = tiles.map(function(t){return t.letter;}).join("");
 
@@ -891,14 +811,14 @@
       returnStageToPool();
       return;
     }
-    if (!WORDSET.has(word)){
+    if (!state.set.words.has(word)){
       setFeedback("“" + word + "” isn’t in the word list", "bad");
       shakeStage();
       returnStageToPool();
       return;
     }
 
-    var pts = tiles.reduce(function(s,t){ return s + t.value; }, 0);
+    var pts = wordPoints(word);
     state.score += pts;
     state.totalWordsFound++;
     state.foundThisSet.push({ word: word, pts: pts });
@@ -910,15 +830,18 @@
     renderFound();
 
     if (state.foundThisSet.length === 4){
-      var bonus = 25;
+      var bonus = SET_BONUS;
       state.score += bonus;
+      state.locked = true;
       updateScore();
       setFeedback("Set complete! Bonus +" + bonus + " — new letters incoming", "bonus");
       state.setsCompleted++;
       setTimeout(function(){
-        state.tiles = generateLetterSet();
-        state.foundThisSet = [];
+        if (state.timeLeft <= 0) return; // round already ended
+        state.locked = false;
+        nextSet();
         renderTiles();
+        renderStage();
         renderFound();
         setFeedback("", "");
       }, 900);

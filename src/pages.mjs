@@ -55,7 +55,7 @@ export function buildPages() {
     <div>
       <p class="eyebrow">Husband · Dad · Runner · Reader</p>
       <h1>Hi, I’m Michael.</h1>
-      <p class="lede">Welcome to my little corner of the web. I’m a husband and dad, a marathon runner, a Tae Kwon Do black belt (right alongside my kids), an avid reader and a big believer in getting a little better every day. By day I build software at ${ext(CARMAX, 'CarMax')}.</p>
+      <p class="lede">Welcome to my little corner of the web. I’m a husband and dad, a marathon runner, a Tae Kwon Do black belt (right alongside my kids), an avid reader and a big believer in getting a little better every day. By day I’m a software architect at ${ext(CARMAX, 'CarMax')}, helping teams build secure, scalable solutions.</p>
       <div class="hero-actions">
         <a class="btn btn-light" href="${u('about')}">More about me</a>
         <a class="btn btn-outline-light" href="${u('booklist')}">What I’m reading</a>
@@ -130,7 +130,7 @@ export function buildPages() {
     img: 'dev-architecture.svg',
     alt: 'Software illustration',
     title: 'What I do for work',
-    body: `<p>Professionally, I’m a software engineer and architect at ${ext(CARMAX, 'CarMax')}, building applications and APIs on cloud technologies. Part of the fun is that there’s always room to keep improving and learning (like life).</p>
+    body: `<p>Professionally, I’m an experienced software architect at ${ext(CARMAX, 'CarMax')}. I partner with teams across a Fortune 200 technology organization to design scalable solutions that keep our customers secure while delivering exceptional experiences. Part of the fun is that there’s always room to keep improving and learning (like life).</p>
       <ul class="links">
         <li><a href="${u('developer')}">Work &amp; tech corner →</a></li>
         <li>${ext(LINKEDIN, 'LinkedIn ↗')}</li>
@@ -180,7 +180,7 @@ export function buildPages() {
         </div>
         <div class="card">
           <h2 class="card-title">Work</h2>
-          <p>By day I’m a software engineer and architect at ${ext(CARMAX, 'CarMax')}, building applications and APIs with modern cloud technologies. If that’s your thing too, take a look at my <a href="../developer/">work &amp; tech corner</a>.</p>
+          <p>By day I’m an experienced software architect at ${ext(CARMAX, 'CarMax')}, working with teams across a Fortune 200 technology organization to build scalable solutions that keep our customers secure while delivering exceptional experiences. If that’s your thing too, take a look at my <a href="../developer/">work &amp; tech corner</a>.</p>
         </div>
       </div>`),
   });

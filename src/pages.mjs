@@ -236,7 +236,7 @@ export function buildPages() {
         section(`
         <h2>Learn &amp; practice</h2>
         <div class="grid cols-3" style="margin:1rem 0 2.5rem">
-          ${card('❓', 'Interview Questions', 'Common C#, Azure and problem-solving interview questions with answers.', 'developer/interview-questions')}
+          ${card('❓', 'Interview Questions', 'Solution architect interview questions on CIAM, Azure, AI, teamwork and delivery.', 'developer/interview-questions')}
           ${card('🎧', 'Podcasts', 'The podcasts I listen to during my commute and on runs.', 'developer/podcasts')}
           ${card('🔗', 'Resources', 'Helpful learning resources for Azure, .NET and software engineering.', 'developer/resources')}
         </div>
@@ -258,22 +258,6 @@ export function buildPages() {
   // ==========================================================================
   {
     const root = rootFor('developer/interview-questions');
-    const cs = [
-      ['Can multiple catch blocks be executed?', "No, Multiple catch blocks of similar type can't be executed. Once the proper catch code executed, the control is transferred to the finally block, and then the code that follows the finally block gets executed."],
-      ['Define Constructors', 'A constructor is a member function in a class that has the same name as its class. The constructor is automatically invoked whenever an object class is created. It constructs the values of data members while initializing the class.'],
-      ['What are Jagged Arrays?', 'Arrays of arrays, which can have different sizes and dimensions.'],
-      ['What is the difference between ref & out parameters?', 'An argument passed as ref must be initialized before passing to the method whereas out parameter needs not to be initialized before passing to a method.'],
-      ["What is the use of 'using' statement in C#?", "The 'using' block is used to obtain a resource and process it and then automatically dispose of when the execution of the block completed."],
-      ['What is serialization?', 'When we want to transport an object through a network, then we have to convert the object into a stream of bytes. The process of converting an object into a stream of bytes is called Serialization. For an object to be serializable, it should implement ISerialize Interface. De-serialization is the reverse process of creating an object from a stream of bytes.'],
-      ["Can we use 'this' command within a static method?", "We can't use 'This' in a static method because we can only use static variables/methods in a static method."],
-      ['What is the difference between constants and read-only?', "Constant variables are declared and initialized at compile time. The value can't be changed afterward. Read-only is used only when we want to assign the value at run time."],
-      ['What are sealed classes in C#?', 'We create sealed classes when we want to restrict the class to be inherited. Sealed modifier used to prevent derivation from a class. If we forcefully specify a sealed class as base class, then a compile-time error occurs.'],
-      ['What is method overloading?', 'Method overloading is creating multiple methods with the same name with unique signatures in the same class. When we compile, the compiler uses overload resolution to determine the specific method to be invoke.'],
-    ];
-    const az = [
-      ['What are the different cloud deployment models?', 'Public, private, and hybrid.'],
-      ['What are virtual machine scale sets in Azure?', ''],
-    ];
     const ps = [
       ['How would you define and drive a CIAM target architecture across a large enterprise with multiple product teams and legacy identity stacks?', 'Start with business outcomes and risk posture, then define a reference architecture and capability roadmap. Use architecture decision records, platform standards, and phased migration patterns that let teams deliver incrementally while converging on shared CIAM services.'],
       ['Describe a time you had to build consensus across security, product, and engineering teams that had conflicting CIAM priorities.', 'I align stakeholders on measurable outcomes first, such as fraud reduction, conversion, and compliance timelines. Then I facilitate trade-off decisions with transparent options, documented risks, and clear ownership so disagreement turns into an executable plan.'],
@@ -283,35 +267,90 @@ export function buildPages() {
       ['How do you measure whether a CIAM transformation is succeeding at enterprise scale?', 'I track a balanced scorecard: authentication success rate, latency, account takeover incidents, onboarding time for teams, and release frequency. Success means better security and reliability while business teams ship faster and customer conversion improves.'],
       ['When performance or reliability issues appear in identity flows, how do you lead the response across multiple teams?', 'I establish shared incident command, define clear service ownership boundaries, and drive root-cause analysis across identity, app, and infrastructure layers. Then I convert lessons learned into architectural guardrails, SLOs, and automated regression checks.'],
     ];
+    const N = {
+      ciam: [
+        ['How do you decide whether to buy, build, or extend a CIAM platform such as Microsoft Entra External ID, Okta, Auth0, or Ping?', 'I start with capabilities and constraints rather than vendors: journeys to support, scale, regulatory needs, integration with legacy systems, and the cost of ownership over several years. I score the options against weighted criteria with the business and security teams, run a time-boxed proof of concept on the hardest journeys, and document the decision, the trade-offs, and the exit strategy in an architecture decision record.'],
+        ['How do you design authentication for customer-facing web, mobile, and API workloads using OpenID Connect and OAuth 2.0?', 'Use the authorization code flow with PKCE for apps, short-lived access tokens scoped to specific APIs, and refresh tokens only where the client can protect them. Keep authentication (who the user is, via the ID token) separate from authorization (what a client may do, via scopes and claims), and validate issuer, audience, and signature at every API. My <a href="../../tech-docs/scopes-and-claims/">scopes & claims guide</a> walks through the model.', true],
+        ps[0],
+        ps[2],
+        ['How do you approach account recovery and passkey or passwordless adoption without increasing account takeover risk?', 'Recovery is usually the weakest link, so I design it with the same rigor as sign-in: verify through multiple signals, add friction and notifications for high-risk changes, and avoid knowledge-based fallbacks where possible. I introduce passkeys as an opt-in, low-friction upgrade first, measure completion and support-call rates, and retire weaker factors as adoption grows.'],
+        ps[4],
+        ['How do you handle consent, privacy, and customer data in an identity platform?', 'I treat the identity platform as a system of record for a small, well-governed set of attributes: collect only what the journey needs, store consent with a timestamp and purpose, and make export and deletion requests automatable. I partner with legal and privacy early so regulations such as GDPR and CCPA shape the data model and retention rules instead of being retrofitted.'],
+      ],
+      azure: [
+        ['Walk me through designing a highly available, multi-region API on Azure.', 'I start from the recovery objectives (RTO and RPO) and the availability the business actually needs. Then I use Azure Front Door or Traffic Manager for global routing, zone-redundant compute (App Service, Container Apps, or AKS) in two regions, and API Management as the front door. Data uses geo-replication (for example Cosmos DB multi-region writes or SQL failover groups). Health probes, automated failover, and regular failure drills prove it works.'],
+        ['How do you secure workloads on Azure by default?', 'Layered controls: managed identities instead of stored credentials, secrets and keys in Key Vault, private endpoints and network segmentation, least-privilege RBAC, and Azure Policy to enforce the baseline everywhere. Defender for Cloud and logging to a central workspace give continuous assessment, and the controls are packaged in templates so teams get them without extra effort.'],
+        ['How do you choose between App Service, Azure Functions, Container Apps, and AKS?', 'I match the platform to the team and the workload. App Service or Functions for straightforward APIs and event-driven work, Container Apps when teams need containers without cluster operations, and AKS only when we need its control and have the skills to run it. I weigh operational burden, scaling pattern, cost, and portability, and prefer the simplest option that meets the requirements.'],
+        ['How do you build resilient integrations between services and with legacy systems?', 'Prefer asynchronous messaging (Service Bus, Event Grid) where it fits, and design consumers to be idempotent. Apply timeouts, retries with backoff, circuit breakers, and dead-letter queues, and put an anti-corruption layer between new services and legacy models. I confirm the behavior with failure testing rather than assuming it.'],
+        ['How do you provide observability for distributed identity and API flows?', 'Standardize on correlation IDs and structured logs flowing to Application Insights and Log Analytics, define SLIs and SLOs for key journeys such as sign-in success and latency, and build Workbooks and alerts around them. In past work, bringing identity logs into shared dashboards let teams see authentication health end to end.'],
+        ['How do you keep cloud cost and governance under control across many teams?', 'Provide landing zones with guardrails (policy, tagging, budgets, and alerts) so teams move fast inside safe boundaries. I review architectures against the Azure Well-Architected Framework, make cost a visible design quality alongside reliability and security, and revisit sizing with real usage data.'],
+      ],
+      ai: [
+        ['Where does AI add real value in an enterprise or CIAM setting, and where would you be cautious?', 'It adds value in fraud and risk signals, support and knowledge assistance, document and data processing, and developer productivity. I am cautious about letting a probabilistic model be the sole decision-maker for security-critical actions such as granting access. In those cases AI informs a decision that deterministic controls and humans still own.'],
+        ['How would you architect a secure retrieval-augmented generation (RAG) solution on Azure?', 'Azure OpenAI or Foundry models behind private networking, Azure AI Search for retrieval, and managed identities for service-to-service access. The key design point is security trimming: retrieval must respect the signed-in user\'s permissions so the model never sees data the user could not access directly. Add content filtering, logging, and an evaluation set to track quality.'],
+        ['How do you manage risks such as prompt injection, data leakage, and hallucination?', 'Treat model input and output as untrusted: validate and constrain outputs, separate instructions from data, limit what tools and data the model can reach, and use content safety filters. For high-impact actions require human approval, and test with adversarial red-team prompts before release.'],
+        ['How should identity and access work for AI agents that call tools and APIs?', 'Give agents their own identities with least-privilege, narrowly scoped, short-lived credentials, and use delegated (on-behalf-of) flows so actions run with the user\'s rights rather than a broad service account. Audit every tool call, and require step-up approval for sensitive operations.'],
+        ['How do you evaluate and monitor an AI feature in production?', 'Build an evaluation set from real scenarios before launch and track quality, safety, latency, and cost afterward. Collect user feedback, watch for drift when models or data change, and gate model or prompt changes behind the same testing and rollout discipline as code.'],
+        ['How do you align leaders and teams on AI adoption without chasing hype?', 'Start with a specific business problem and a measurable outcome, run a small pilot with clear success criteria, and establish lightweight governance for responsible use, data handling, and review. Sharing results openly, including what did not work, builds trust and focuses investment.'],
+      ],
+      alignment: [
+        ps[1],
+        ['How do you influence and lead when you do not manage the people or teams involved?', 'I earn influence through clarity and credibility: a shared goal, a well-reasoned proposal, and a record of helping teams succeed. I listen first to understand each team\'s constraints and incentives, find the benefit for them, and make the right path the easy one with templates, examples, and support.'],
+        ps[3],
+        ['What do you do when a team disagrees with your proposed architecture?', 'I treat the disagreement as information. I ask what concern is behind it, test my assumptions against theirs, and use data, a prototype, or a small experiment when opinions conflict. If a better idea emerges I adopt it; if not, we agree on the decision and the reasons, then commit together.'],
+        ['How do you communicate the same architecture to executives and to engineers?', 'Executives need outcomes, risk, cost, and timeline, so I lead with the problem and the business impact and keep the detail one level down. Engineers need constraints, interfaces, and the reasoning behind the design. I keep a single source of truth, such as diagrams and decision records, and tailor the story to each audience.'],
+        ['How do you build the capability of the teams around you?', 'I pair on designs, run short reviews and brown-bag sessions, and share reference implementations and playbooks. The goal is for teams to own their solutions and make good decisions without me, which scales far better than being the bottleneck.'],
+      ],
+      decisions: [
+        ['How do you analyze a vague or ambiguous problem before proposing a solution?', 'I clarify the outcome and who is affected, list constraints and quality attributes such as security, scale, and cost, and gather data on how the current system behaves. I then frame two or three viable options with their trade-offs rather than jumping to the first idea.'],
+        ['Walk me through how you make and document a significant architecture decision.', 'I define the decision and its drivers, compare realistic options against agreed criteria, and consult the people affected. I record the outcome in an architecture decision record covering context, options, decision, and consequences, and I note whether it is easy or hard to reverse so the right level of rigor is applied.'],
+        ['How do you decide when you have incomplete information or limited time?', 'I separate decisions that are easy to reverse from those that are not. For reversible ones I move quickly with the best available information and a way to learn from the result. For hard-to-reverse ones I invest in a spike or proof of concept to remove the biggest unknowns first.'],
+        ['How do you balance technical debt against delivering new features?', 'I make the debt visible and tie it to business impact, such as slower delivery, incidents, or security exposure. Then I negotiate a sustainable allocation, address the debt that blocks priorities first, and avoid big-bang rewrites in favor of incremental improvements.'],
+        ['How do you identify and manage architectural and security risk?', 'I use threat modeling early, keep a visible risk register with owners and mitigations, and validate the riskiest assumptions with prototypes and load or failure tests. Risks are reviewed regularly with stakeholders so surprises are rare.'],
+        ['How do you know afterward whether a decision was the right one?', 'I define success measures up front, such as reliability, performance, cost, or delivery speed, and review them after release. When results differ from expectations, I share what we learned and adjust, so the decision history improves the next ones.'],
+      ],
+      execution: [
+        ['How do you turn an architecture into a delivery plan that several teams can execute?', 'I break the solution into thin vertical slices, starting with a walking skeleton that proves the riskiest integrations end to end. I map dependencies between teams, agree on contracts and interfaces early, and define milestones with measurable outcomes so progress is visible.'],
+        ps[5],
+        ['How do you ensure consistent quality across many teams and services?', 'Shared standards and automation: contract and integration tests that run on every build, a common definition of done, and a maturity model that rates services on reliability, security, and supportability so gaps are visible. Quality is built into the pipeline instead of inspected at the end.'],
+        ps[6],
+        ['What do you do when a critical project is slipping?', 'First get an honest picture of scope, progress, and blockers. Then work with the team and sponsors on options: reduce scope, re-sequence work, add help, or adjust the date. I communicate early and plainly, remove obstacles, and focus the team on the most valuable outcome.'],
+        ['How do you roll out a major change or migration safely?', 'Incrementally: feature flags, canary or percentage-based releases, parallel runs where possible, and a tested rollback plan. I watch agreed health metrics during each stage and keep stakeholders informed so any problem is caught while its impact is still small.'],
+      ],
+    };
+    const groups = [
+      ['ciam', 'CIAM & Identity', N.ciam],
+      ['azure', 'Azure & Cloud', N.azure],
+      ['ai', 'AI', N.ai],
+      ['alignment', 'Teamwork & Alignment', N.alignment],
+      ['decisions', 'Analysis & Decisions', N.decisions],
+      ['execution', 'Execution & Delivery', N.execution],
+    ];
     const list = (qs) =>
       qs
         .map(
-          ([q, a], i) => `<details class="qa"><summary><span class="num">${i + 1}</span><span>${esc(q)}</span></summary>
-        <div class="answer${a ? '' : ' empty'}"><p>${a ? esc(a) : 'No answer written yet.'}</p></div></details>`
+          ([q, a, html], i) => `<details class="qa"><summary><span class="num">${i + 1}</span><span>${esc(q)}</span></summary>
+        <div class="answer${a ? '' : ' empty'}"><p>${a ? (html ? a : esc(a)) : 'No answer written yet.'}</p></div></details>`
         )
         .join('\n');
-    const panel = (id, qs) => `<div data-panel="${id}" role="tabpanel" aria-labelledby="tab-${id}"${id === 'csharp' ? '' : ' hidden'}>${list(qs)}</div>`;
+    const panel = (id, qs, i) => `<div data-panel="${id}" role="tabpanel" aria-labelledby="tab-${id}"${i === 0 ? '' : ' hidden'}>${list(qs)}</div>`;
     add({
       path: 'developer/interview-questions',
       title: 'Interview Questions',
-      description: 'Practice common C#, Azure and CIAM problem-solving interview questions with concise answers.',
+      description: 'Practice solution architect interview questions on CIAM, Azure, AI, teamwork, decision making and delivery, with concise answers.',
       scripts: ['interview.js'],
       body:
         pageHead({
           eyebrow: 'Work & Tech',
           title: 'Interview questions',
-          lede: 'Practice common interview questions across different categories. Tap a question to reveal the answer.',
+          lede: 'Practice solution architect interview questions on CIAM, Azure and AI, plus the teamwork, analysis, decision-making and execution skills it takes to gain alignment and deliver quality solutions. Tap a question to reveal the answer.',
           crumbs: [{ label: 'Work & Tech', href: hrefFor(root, 'developer') }, { label: 'Interview Questions' }],
         }) +
         section(`
         <div class="tabs" role="tablist" aria-label="Question category">
-          <button class="tab" role="tab" id="tab-csharp" data-tab="csharp" aria-selected="true">C# <span class="muted">(${cs.length})</span></button>
-          <button class="tab" role="tab" id="tab-azure" data-tab="azure" aria-selected="false">Azure <span class="muted">(${az.length})</span></button>
-          <button class="tab" role="tab" id="tab-problem-solving" data-tab="problem-solving" aria-selected="false">Problem solving <span class="muted">(${ps.length})</span></button>
+          ${groups.map(([id, label, qs], i) => `<button class="tab" role="tab" id="tab-${id}" data-tab="${id}" aria-selected="${i === 0}">${label} <span class="muted">(${qs.length})</span></button>`).join('\n          ')}
         </div>
-        ${panel('csharp', cs)}
-        ${panel('azure', az)}
-        ${panel('problem-solving', ps)}
+        ${groups.map(([id, , qs], i) => panel(id, qs, i)).join('\n        ')}
         <noscript><style>[data-panel][hidden]{display:block!important}</style></noscript>`),
     });
   }

@@ -1,11 +1,12 @@
 (function () {
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
   var panels = Array.prototype.slice.call(document.querySelectorAll('[data-panel]'));
-  var map = { csharp: 'csharp', azure: 'azure', 'problem-solving': 'problem-solving' };
-  var legacy = { CSharp: 'csharp', Azure: 'azure', ProblemSolving: 'problem-solving' }; // ?category= links from the old site
+  var map = {};
+  tabs.forEach(function (t) { map[t.dataset.tab] = true; });
+  var legacy = { CSharp: 'ciam', Azure: 'azure', ProblemSolving: 'alignment' }; // ?category= links from the old site
 
   function show(id, pushHash) {
-    if (!map[id]) id = 'csharp';
+    if (!map[id]) id = tabs[0].dataset.tab;
     tabs.forEach(function (t) {
       var sel = t.dataset.tab === id;
       t.setAttribute('aria-selected', String(sel));
@@ -24,7 +25,7 @@
     });
   });
   var param = new URLSearchParams(location.search).get('category');
-  var start = location.hash.slice(1) || legacy[param] || 'csharp';
+  var start = location.hash.slice(1) || legacy[param] || tabs[0].dataset.tab;
   show(start, false);
   window.addEventListener('hashchange', function () { show(location.hash.slice(1), false); });
 })();

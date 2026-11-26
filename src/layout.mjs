@@ -36,7 +36,7 @@ export const NAV = [
     group: 'Work & Tech',
     items: [
       { label: 'Overview', path: 'developer', desc: 'My software corner' },
-      { label: 'Interview Questions', path: 'developer/interview-questions', desc: 'C#, Azure & problem solving' },
+      { label: 'Interview Questions', path: 'developer/interview-questions', desc: 'CIAM, Azure, AI & delivery' },
       { label: 'Resources', path: 'developer/resources', desc: 'Azure, .NET & engineering' },
       { label: 'JWT Decoder', path: 'developer/jwt-decoder', desc: 'Inspect JSON Web Tokens' },
       { label: 'RSA Validator', path: 'developer/rsa-validator', desc: 'Verify RSA signatures' },

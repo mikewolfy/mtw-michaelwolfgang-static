@@ -107,8 +107,9 @@ export function buildPages() {
       <p>Getting there wasn’t quick or easy — it took years of consistent practice, showing up on the hard days, and pushing through plateaus together. That shared effort is what made it worthwhile: we didn’t just get a belt, we built a habit of discipline and perseverance as a family, and we keep training together to this day.</p>`,
   })}
   ${feature({
-    img: 'learning-icon.svg',
-    alt: 'Open book illustration',
+    img: 'reading-library.jpg',
+    photo: true,
+    alt: 'Library bookshelves under arched windows',
     title: 'Reader and lifelong learner',
     body: `<p>I’m a big believer in constant improvement. Learning is a habit that pays exponential dividends over time. The older I get, the less free time I seem to have, so I’m always curating the books, podcasts and articles that make the most of it — from leadership and psychology to a good Jack Reacher or Thursday Murder Club story.</p>
       <ul class="links">
@@ -118,8 +119,9 @@ export function buildPages() {
       </ul>`,
   })}
   ${feature({
-    img: 'finance-growth.svg',
-    alt: 'Personal finance growth illustration',
+    img: 'investing-charts.jpg',
+    photo: true,
+    alt: 'Financial charts on a trading screen',
     title: 'Personal finance and investing',
     body: `<p>Personal finance is an important part of any adult’s life, especially for those of us with kids and families depending on us. The basics are pretty simple, but not very well understood — we spend more time researching our next TV than our investment options.</p>
       <h3>3 major keys to individual investing success</h3>
@@ -127,8 +129,9 @@ export function buildPages() {
       <p>I share more on my little investing site: ${ext(PRUDENT, 'prudentheed.com ↗')}</p>`,
   })}
   ${feature({
-    img: 'dev-architecture.svg',
-    alt: 'Software illustration',
+    img: 'cloud-datacenter.jpg',
+    photo: true,
+    alt: 'Aerial view of a cloud data center',
     title: 'What I do for work',
     body: `<p>Professionally, I’m an experienced software architect at ${ext(CARMAX, 'CarMax')}. I partner with teams across a Fortune 200 technology organization to design scalable solutions that keep our customers secure while delivering exceptional experiences. Part of the fun is that there’s always room to keep improving and learning (like life).</p>
       <ul class="links">

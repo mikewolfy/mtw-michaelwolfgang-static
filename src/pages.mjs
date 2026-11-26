@@ -323,14 +323,14 @@ export function buildPages() {
     const root = rootFor('developer/podcasts');
     const podcasts = [
       ['.NET Rocks', 'The internet audio talk show for .NET developers', 'dotnetrocks.jpg'],
-      ['Hanselminutes', 'Fresh Air for Developers', 'hanselminutes.jpg'],
-      ['Azure Friday', 'Learn about Microsoft Azure', 'azure-friday.jpg'],
       ['Azure Podcast', 'Discussions about Microsoft Azure', 'azurepodcast.jpg'],
       ['Darknet Diaries', 'True stories from the dark side of the Internet', 'darknet-diaries.jpg'],
       ['Lex Fridman Podcast', 'Conversations about AI, science, and technology', 'lexfridman.jpg'],
       ['Freakonomics Radio', 'Discover the hidden side of everything', 'freakenomics-radio-podcast.jpeg'],
       ['The Knowledge Project', 'Master the best of what other people have figured out', 'knowledge-project-podcast.png'],
       ['Marketplace', 'Make sense of today’s business and economy', 'marketplace-podcast.jpg'],
+      ['The Indicator', 'Quick daily stories about the economy from Planet Money', 'the-indicator.jpg'],
+      ['Lenny’s Podcast', 'Interviews on product, career and growth', 'lennys-podcast.jpg'],
       ['Up First', 'NPR’s morning news podcast', 'upfirst.jpg'],
     ];
     add({

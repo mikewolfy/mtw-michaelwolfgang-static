@@ -1,13 +1,31 @@
 {
  "books": [
   {
+   "title": "We Solve Murders",
+   "author": "Richard Osman",
+   "date": "November 2026",
+   "category": "Fiction",
+   "status": "In Progress",
+   "imageUrl": "https://covers.openlibrary.org/b/id/14815421-L.jpg",
+   "notes": "A standalone mystery from Richard Osman, following a famous author and a bodyguard who get pulled into a murder case while on the run."
+  },
+  {
+   "title": "Jack Reacher - Blue Moon (#24)",
+   "author": "Lee Child",
+   "date": "November 2026",
+   "category": "Fiction",
+   "rating": 7,
+   "imageUrl": "https://covers.openlibrary.org/b/id/14425140-L.jpg",
+   "notes": "A Jack Reacher story where Reacher steps in to help an elderly man and ends up caught in a war between two rival gangs."
+  },
+  {
    "title": "The Man Who Died Twice",
    "author": "Richard Osman",
    "date": "October 2026",
    "category": "Fiction",
-   "status": "In Progress",
    "imageUrl": "https://covers.openlibrary.org/b/id/12002504-L.jpg",
-   "notes": "Book two of the Thursday Murder Club series, as the retirees are pulled into a new case when a dangerous figure from Elizabeth’s past turns up."
+   "notes": "Book two of the Thursday Murder Club series, as the retirees are pulled into a new case when a dangerous figure from Elizabeth’s past turns up.",
+   "rating": 9
   },
   {
    "title": "The Dungeon Anarchist's Cookbook",
